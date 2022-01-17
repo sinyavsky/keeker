@@ -1,0 +1,88 @@
+@import url("../vendor/normalize.css");
+
+@import url("../blocks/page/page.css");
+
+.entrance {
+  margin: 40px auto 0;
+  width: 512px;
+  max-width: 100%;
+  background-color: #fff;
+  padding: 40px;
+}
+
+.entrance__heading {
+  font-size: 32px;
+  line-height: 1;
+  margin: 0 0 16px;
+}
+
+.entrance__form {
+  display: flex;
+  width: 100%;
+}
+
+.entrance__input {
+  border: 1px solid #ced4da;
+  padding: 12px;
+  flex-grow: 1;
+}
+
+.entrance__button {
+  flex-shrink: 0;
+  display: block;
+  border: 0;
+  background-color: #29caf0;
+  color: #fff;
+  padding: 12px 25px;
+  text-transform: uppercase;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.transactions {
+  max-width: 592px;
+  margin: 0 auto;
+  padding-top: 40px;
+}
+
+.transactions__list {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  row-gap: 16px;
+}
+
+.transaction {
+  background-color: #fff;
+  padding: 40px;
+  border-left: 3px solid gray;
+}
+
+.transaction_type_receive {
+  border-left-color: #5bcb22;
+}
+
+.transaction_type_send {
+  border-left-color: #f64750;
+}
+
+.transaction__heading {
+  margin: 0 0 16px;
+  font-size: 24px;
+}
+
+.transaction__line {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+.transaction__hashlink {
+
+}
+
+.transaction__time {
+
+}

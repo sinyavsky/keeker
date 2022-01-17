@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Keeker!</title>
+</head>
+<body class="page">
+  <main>
+    <section class="entrance">
+      <h1 class="entrance__heading">Keeker!</h1>
+      <form class="entrance__form">
+        <input type="text" class="entrance__input" placeholder="Enter .near account">
+        <button type="submit" class="entrance__button">Submit</button>
+      </form>
+    </section>
+    <section class="transactions">
+      <ul class="transactions__list">
+        <li class="transaction transaction_type_receive">
+          <h3 class="transaction__heading">Received 100 NEAR from limpbizkit.near</h3>
+          <p class="transaction__line">Hash: <a href="#" class="transaction_hashlink">BjhMUGx5sy71AZQYKSotLE7BZShSaCDndjWSH8MvQECh</a></p>
+          <p class="transaction__line">Time: <time class="transaction__time">23/01/2022 12:00:00 UTC</time></p>
+        </li>
+        <li class="transaction transaction_type_send">
+          <h3 class="transaction__heading">Sent 100 NEAR to limpbizkit.near</h3>
+          <p class="transaction__line">Hash: <a href="#" class="transaction_hashlink">BjhMUGx5sy71AZQYKSotLE7BZShSaCDndjWSH8MvQECh</a></p>
+          <p class="transaction__line">Time: <time class="transaction__time">23/01/2022 12:00:00 UTC</time></p>
+        </li>
+      </ul>
+    </section>
+  </main>
+
+  <template class="transaction-template">
+    <li class="transaction">
+      <h3 class="transaction__heading"></h3>
+      <p class="transaction__line">Hash: <a href="#" class="transaction__hashlink" target="_blank"></a></p>
+      <p class="transaction__line">Time: <time class="transaction__time"></time></p>
+    </li>
+  </template>
+
+</body>
+</html>
