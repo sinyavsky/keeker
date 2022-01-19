@@ -1,3 +1,5 @@
+// enums
+
 export const ACTION_KIND = { 
   FUNCTION_CALL: 'FUNCTION_CALL',
   TRANSFER: 'TRANSFER',
@@ -12,4 +14,10 @@ export const ACTION_KIND = {
 export const ACTION_DIRECTION = {
   IN: 'IN',
   OUT: 'OUT'
+};
+
+export const CONTRACT_INTERFACE = {
+  NON_FUNGIBLE_TOKEN: 'NON_FUNGIBLE_TOKEN',
+  FUNGIBLE_TOKEN: 'FUNGIBLE_TOKEN',
+  UNKNOWN: 'UNKNOWN'
 };
