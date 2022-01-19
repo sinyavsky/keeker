@@ -1,0 +1,7 @@
+.entrance__input {
+  border: 1px solid #ced4da;
+  padding: 12px;
+  flex-grow: 1;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+}

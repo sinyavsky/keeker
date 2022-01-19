@@ -14,7 +14,7 @@ module.exports = merge(common, {
     chunkFilename: 'js/[name].chunk.js',
   },
   devServer: {
-    inline: true,
+    //inline: true,
     hot: true,
   },
   experiments: {
@@ -34,6 +34,9 @@ module.exports = merge(common, {
     }),
     new ESLintPlugin({
       emitWarning: true,
+    }),
+    new Webpack.ProvidePlugin({
+      Buffer: ['buffer', 'Buffer'],
     }),
   ],
   module: {

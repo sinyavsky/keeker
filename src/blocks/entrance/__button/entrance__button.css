@@ -1,0 +1,13 @@
+.entrance__button {
+  flex-shrink: 0;
+  display: block;
+  border: 0;
+  background-color: #29caf0;
+  color: #fff;
+  padding: 12px 25px;
+  text-transform: uppercase;
+  font-weight: bold;
+  cursor: pointer;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+}

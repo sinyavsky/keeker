@@ -1,88 +1,26 @@
 @import url("../vendor/normalize.css");
+@import url("../vendor/pretty-print-json.css");
 
 @import url("../blocks/page/page.css");
+@import url("../blocks/sidebar/sidebar.css");
+@import url("../blocks/sidebar/__heading/sidebar__heading.css");
+@import url("../blocks/sidebar/__description/sidebar__description.css");
 
-.entrance {
-  margin: 40px auto 0;
-  width: 512px;
-  max-width: 100%;
-  background-color: #fff;
-  padding: 40px;
-}
+@import url("../blocks/content/content.css");
+@import url("../blocks/entrance/__heading/entrance__heading.css");
+@import url("../blocks/entrance/__form/entrance__form.css");
+@import url("../blocks/entrance/__input/entrance__input.css");
+@import url("../blocks/entrance/__button/entrance__button.css");
 
-.entrance__heading {
-  font-size: 32px;
-  line-height: 1;
-  margin: 0 0 16px;
-}
-
-.entrance__form {
-  display: flex;
-  width: 100%;
-}
-
-.entrance__input {
-  border: 1px solid #ced4da;
-  padding: 12px;
-  flex-grow: 1;
-}
-
-.entrance__button {
-  flex-shrink: 0;
-  display: block;
-  border: 0;
-  background-color: #29caf0;
-  color: #fff;
-  padding: 12px 25px;
-  text-transform: uppercase;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.transactions {
-  max-width: 592px;
-  margin: 0 auto;
-  padding-top: 40px;
-}
-
-.transactions__list {
-  margin: 0;
-  padding: 0;
-  list-style-type: none;
-  display: flex;
-  flex-direction: column;
-  row-gap: 16px;
-}
-
-.transaction {
-  background-color: #fff;
-  padding: 40px;
-  border-left: 3px solid gray;
-}
-
-.transaction_type_receive {
-  border-left-color: #5bcb22;
-}
-
-.transaction_type_send {
-  border-left-color: #f64750;
-}
-
-.transaction__heading {
-  margin: 0 0 16px;
-  font-size: 24px;
-}
-
-.transaction__line {
-  margin: 0;
-  font-size: 14px;
-  line-height: 1.2;
-}
-
-.transaction__hashlink {
-
-}
-
-.transaction__time {
-
-}
+@import url("../blocks/transactions/transactions.css");
+@import url("../blocks/transactions/__list/transactions__list.css");
+@import url("../blocks/transaction/transaction.css");
+@import url("../blocks/transaction/_type/transaction_type_receive.css");
+@import url("../blocks/transaction/_type/transaction_type_send.css");
+@import url("../blocks/transaction/__heading/transaction__heading.css");
+@import url("../blocks/transaction/__hash/transaction__hash.css");
+@import url("../blocks/transaction/__hashlink/transaction__hashlink.css");
+@import url("../blocks/transaction/__time/transaction__time.css");
+@import url("../blocks/transaction/__more/transaction__more.css");
+@import url("../blocks/transaction/__source/transaction__source.css");
+@import url("../blocks/transaction/__source/_visible/transaction__source_visible.css");

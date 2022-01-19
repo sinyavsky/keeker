@@ -1,0 +1,8 @@
+.transaction__hashlink {
+  color: inherit;
+  transition: opacity ease .5s;
+}
+
+.transaction__hashlink:hover {
+  opacity: .8;
+}

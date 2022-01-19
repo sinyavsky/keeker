@@ -1,0 +1,17 @@
+.transaction__more {
+  background-color: #eee;
+  line-height: 1;
+  font-size: 14px;
+  text-transform: uppercase;
+  font-weight: bold;
+  border: 0;
+  padding: 4px 16px;
+  margin-top: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: opacity ease .5s;
+}
+
+.transaction__more:hover {
+  opacity: .8;
+}

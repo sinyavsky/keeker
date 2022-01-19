@@ -1,0 +1,15 @@
+.sidebar {
+  display: none;
+}
+
+@media screen and (min-width: 768px) {
+  .sidebar {
+    display: block;
+    background-color: #fff;
+    width: 200px;
+    height: 100vh;
+    order: 1;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+}

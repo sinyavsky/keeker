@@ -1,0 +1,5 @@
+.transaction__source {
+  display: none;
+  overflow-x: auto;
+  margin: 16px 0 0;
+}

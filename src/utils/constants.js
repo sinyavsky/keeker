@@ -1,4 +1,4 @@
-export const TRANSACTION_TYPE = { 
+export const ACTION_KIND = { 
   FUNCTION_CALL: 'FUNCTION_CALL',
   TRANSFER: 'TRANSFER',
   ADD_KEY: 'ADD_KEY',
@@ -9,8 +9,7 @@ export const TRANSACTION_TYPE = {
   DELETE_ACCOUNT: 'DELETE_ACCOUNT'
 };
 
-export const TRANSACTION_SUB_TYPE = { 
-  SEND: 'SEND',
-  RECEIVE: 'RECEIVE',
-  TRANSFER_TO_AURORA: 'TRANSFER_TO_AURORA'
+export const ACTION_DIRECTION = {
+  IN: 'IN',
+  OUT: 'OUT'
 };
