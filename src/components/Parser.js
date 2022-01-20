@@ -1,5 +1,5 @@
 import { utils } from "near-api-js";
-import { ACTION_KIND, ACTION_DIRECTION } from '../utils/constants.js';
+import { ACTION_KIND, ACTION_DIRECTION, CONTRACT_INTERFACE } from '../utils/constants.js';
 
 export default class Parser {
   
@@ -71,5 +71,21 @@ export default class Parser {
       break;      
     }
     return res;
+  }
+
+  getContractInterface(data) {
+    try {
+      if(['nep171', 'nep177', 'nep178'].some(r=> data.probableInterfaces.indexOf(r) >= 0)) {
+        return CONTRACT_INTERFACE.NON_FUNGIBLE_TOKEN;
+      }
+  
+      else if(['nep141', 'nep148'].some(r=> data.probableInterfaces.indexOf(r) >= 0)) {
+        return CONTRACT_INTERFACE.FUNGIBLE_TOKEN;
+      }
+    }
+
+    catch(error) {
+      return CONTRACT_INTERFACE.UNKNOWN;
+    }
   }
 }
