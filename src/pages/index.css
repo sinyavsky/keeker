@@ -17,6 +17,7 @@
 @import url("../blocks/transaction/transaction.css");
 @import url("../blocks/transaction/_type/transaction_type_receive.css");
 @import url("../blocks/transaction/_type/transaction_type_send.css");
+@import url("../blocks/transaction/__icon/transaction__icon.css");
 @import url("../blocks/transaction/__heading/transaction__heading.css");
 @import url("../blocks/transaction/__hash/transaction__hash.css");
 @import url("../blocks/transaction/__hashlink/transaction__hashlink.css");
@@ -24,3 +25,5 @@
 @import url("../blocks/transaction/__more/transaction__more.css");
 @import url("../blocks/transaction/__source/transaction__source.css");
 @import url("../blocks/transaction/__source/_visible/transaction__source_visible.css");
+
+@import url("../blocks/loader/loader.css");

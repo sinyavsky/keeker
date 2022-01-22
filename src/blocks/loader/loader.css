@@ -1,0 +1,23 @@
+.loader {
+  display: inline-block;
+  width: 64px;
+  height: 64px;
+}
+.loader:after {
+  content: " ";
+  display: block;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 6px solid #29caf0;
+  border-color: #29caf0 transparent #29caf0 transparent;
+  animation: theloader 1.2s linear infinite;
+}
+@keyframes theloader {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

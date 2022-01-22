@@ -26,11 +26,16 @@
 
   <template class="transaction-template">
     <li class="transaction">
-      <h3 class="transaction__heading"></h3>
-      <p class="transaction__hash">Hash: <a href="https://explorer.near.org/transactions/" class="transaction__hashlink" title="View transaction at explorer.near.org" target="_blank"></a></p>
-      <p class="transaction__time"></p>
-      <button type="button" class="transaction__more">Show source</button>
-      <pre class="transaction__source"></pre>
+      <div class="transaction__icon">
+        <div class="loader"></div>
+      </div>
+      <div>
+        <h3 class="transaction__heading"></h3>
+        <p class="transaction__hash">Hash: <a href="https://explorer.near.org/transactions/" class="transaction__hashlink" title="View transaction at explorer.near.org" target="_blank"></a></p>
+        <p class="transaction__time"></p>
+        <button type="button" class="transaction__more">Show source</button>
+        <pre class="transaction__source"></pre>
+      </div>      
     </li>
   </template>
 

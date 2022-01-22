@@ -3,4 +3,5 @@
   padding: 24px 24px 24px 40px;
   border-left: 4px solid gray;
   border-radius: 8px;
+  display: flex;
 }
