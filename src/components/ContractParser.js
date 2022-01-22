@@ -15,9 +15,32 @@ export default class ContractParser {
       helperUrl: 'https://helper.mainnet.near.org',
       explorerUrl: 'https://explorer.mainnet.near.org',
     });
+
+    this._cachedContracts = {};
+    this._cachedMetadata = {};
   }
 
-  async getContractData(account_id) { 
+  _getContractFromCache(account_id) {
+    return account_id in this._cachedContracts ? this._cachedContracts[account_id] : false;
+  }
+
+  _addContractToCache(account_id, data) {
+    this._cachedContracts[account_id] = data;
+  }
+
+  _getMetadataFromCache(account_id) {
+    return account_id in this._cachedMetadata ? this._cachedMetadata[account_id] : false;
+  }
+
+  _addMetadataToCache(account_id, data) {
+    this._cachedMetadata[account_id] = data;
+  }
+
+  async getContractData(account_id) {
+    const cache = this._getContractFromCache(account_id);
+    if(cache !== false) {
+      return cache;
+    }
 
     try {
       const { code_base64 } = await this._near.connection.provider.query({
@@ -25,25 +48,29 @@ export default class ContractParser {
         finality: 'final',
         request_type: 'view_code',
       });
-    
-      this._data = parseContract(code_base64);
+      const res = parseContract(code_base64); // very slow thing, probably will move it to server later
+      this._addContractToCache(account_id, res);
+      return res;
     }
 
     catch(error) {
-      this._data = {};
+      return {};
     }
-    
   }
 
-  getInterface() {
+  getInterface(data) {
     try {
-      if(['nep171', 'nep177', 'nep178'].some(r=> this._data.probableInterfaces.indexOf(r) >= 0)) {
+      if(['nep171', 'nep177', 'nep178'].some(r=> data.probableInterfaces.indexOf(r) >= 0)) {
         return CONTRACT_INTERFACE.NON_FUNGIBLE_TOKEN;
       }
-  
-      else if(['nep141', 'nep148'].some(r=> this._data.probableInterfaces.indexOf(r) >= 0)) {
+      
+      else if(['nep141', 'nep148'].some(r=> data.probableInterfaces.indexOf(r) >= 0)) {
         return CONTRACT_INTERFACE.FUNGIBLE_TOKEN;
       }
+
+      else {
+        return CONTRACT_INTERFACE.UNKNOWN;
+      }      
     }
 
     catch(error) {
@@ -51,7 +78,52 @@ export default class ContractParser {
     }
   }
 
-  getData() {
-    return this._data;
+  async ft_metadata(account_id) {
+    const cache = this._getMetadataFromCache(account_id);
+    if(cache !== false) {
+      return cache;
+    }
+
+    try {
+      const rawResult = await this._near.connection.provider.query({
+        request_type: 'call_function',
+        account_id: account_id,
+        method_name: 'ft_metadata',
+        args_base64: "",
+        finality: 'optimistic',
+      });
+      const res = JSON.parse(Buffer.from(rawResult.result).toString());
+      this._addMetadataToCache(account_id, res);
+      return res;
+    }
+
+    catch(error) {
+      return {};
+    }
   }
+
+  async nft_metadata(account_id) {
+    const cache = this._getMetadataFromCache(account_id);
+    if(cache !== false) {
+      return cache;
+    }
+
+    try {
+      const rawResult = await this._near.connection.provider.query({
+        request_type: 'call_function',
+        account_id: account_id,
+        method_name: 'nft_metadata',
+        args_base64: "",
+        finality: 'optimistic',
+      });
+      const res = JSON.parse(Buffer.from(rawResult.result).toString());
+      this._addMetadataToCache(account_id, res);
+      return res;
+    }
+
+    catch(error) {
+      return {};
+    }
+  }
+
 }
