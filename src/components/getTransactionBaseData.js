@@ -1,4 +1,5 @@
 import { ACTION_KIND, ACTION_DIRECTION } from '../utils/constants.js';
+import TransactionParser from './TransactionParser.js';
 import { formatNearAmount } from "../utils/format.js";
 import iconNear from '../images/near.svg';
 import iconKey from '../images/key.svg';
@@ -8,42 +9,45 @@ import iconCreateAccount from '../images/create-account.svg';
 import iconDeleteAccount from '../images/delete-account.svg';
 
 export default function getTransactionBaseData(trx, currentAccount) {
+
+  const parser = new TransactionParser(trx);
+
   const res = {
-    actionKind: trx.action_kind,
-    hash: trx.hash,
-    blockHash: trx.block_hash,
-    blockTimestamp: trx.block_timestamp,
+    actionKind: parser.getActionKind(),
+    hash: parser.getHash(),
+    blockHash: parser.getBlockHash(),
+    blockTimestamp: parser.getBlockTimestamp(),
     source: trx
   };
 
-  switch(trx.action_kind) {
+  switch(res.actionKind) {
     case ACTION_KIND.FUNCTION_CALL:
       res.heading = 'Loading...'; // okay, we will parse function call later
     break;
     case ACTION_KIND.TRANSFER:
-      if(trx.signer_id === currentAccount) {
-        const nearAmount = formatNearAmount(trx.args.deposit);
-        res.heading = `Send ${nearAmount} NEAR to ${trx.receiver_id}`;
+      if(parser.getSignerId() === currentAccount) {
+        const nearAmount = formatNearAmount(parser.getNearAmount());
+        res.heading = `Send ${nearAmount} NEAR to ${parser.getNearReceiverId()}`;
         res.actionDirection = ACTION_DIRECTION.OUT;
         res.iconSrc = iconNear;
       }
-      else {// trx.receiver_id === currentAccount
-        const nearAmount = formatNearAmount(trx.args.deposit);
-        res.heading = `Receive ${nearAmount} NEAR from ${trx.signer_id}`;
+      else {// receiver === currentAccount
+        const nearAmount = formatNearAmount(parser.getNearAmount());
+        res.heading = `Receive ${nearAmount} NEAR from ${parser.getSignerId()}`;
         res.actionDirection = ACTION_DIRECTION.IN;
         res.iconSrc = iconNear;
       }
     break;
-    case ACTION_KIND.ADD_KEY: // todo: check is heading relevant
-      res.heading = `Add key ${trx.args.public_key} with access ${trx.args.access_key.permission.permission_kind}`;
-
-      if(trx.args.access_key.permission.permission_details && trx.args.access_key.permission.permission_details.receiver_id) {
-        res.heading += ` for ${trx.args.access_key.permission.permission_details.receiver_id}`;
+    case ACTION_KIND.ADD_KEY: { // todo: check is heading relevant
+      res.heading = `Add key ${parser.getAddedPublicKey()} with access ${parser.getAddedPublicKeyPermission()}`;
+      const keyReceiver = parser.getAddedPublicKeyReceiver();
+      if(keyReceiver) {
+        res.heading += ` for ${keyReceiver}`;
       }
       res.iconSrc = iconKey;
-    break;
+    } break;
     case ACTION_KIND.DELETE_KEY: // todo: check is heading relevant
-      res.heading = `Delete key ${trx.args.public_key}`;
+      res.heading = `Delete key ${parser.getDeletedPublicKey()}`;
       res.iconSrc = iconKey;
     break;
     case ACTION_KIND.DEPLOY_CONTRACT: // todo: check is heading relevant
@@ -55,16 +59,17 @@ export default function getTransactionBaseData(trx, currentAccount) {
       res.iconSrc = iconStake;
     break;
     case ACTION_KIND.CREATE_ACCOUNT: // todo: check is heading relevant
-      res.heading = `Create account ${trx.receiver_id}`;
+      res.heading = `Create account ${parser.getCreatedAccount()}`;
       res.iconSrc = iconCreateAccount;
     break;
-    case ACTION_KIND.DELETE_ACCOUNT: // todo: check is heading relevant
-      res.heading = `Delete account ${trx.receiver_id}`;
-      if(trx.args.beneficiary_id) {
-        res.heading += ` and transfer remaining funds to beneficiary account: ${trx.args.beneficiary_id}`;
+    case ACTION_KIND.DELETE_ACCOUNT: { // todo: check is heading relevant
+      res.heading = `Delete account ${parser.getDeletedAccount()}`;
+      const beneficiary = parser.getDeletedAccountBeneficiary();
+      if(beneficiary) {
+        res.heading += ` and transfer remaining funds to beneficiary account: ${beneficiary}`;
       }
       res.iconSrc = iconDeleteAccount;
-    break;
+    } break;
     default: // todo: add icon and probably make a log
       res.heading = 'Unknown action';
     break;      
