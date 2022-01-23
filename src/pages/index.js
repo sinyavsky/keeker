@@ -6,7 +6,8 @@ if (process.env.NODE_ENV === 'development') {
 
 import getSourceTransactions from '../components/getSourceTransactions.js';
 import getTransactionBaseData from '../components/getTransactionBaseData.js';
-import HeadingGenerator from '../components/HeadingGenerator';
+import ContractParser from "../components/ContractParser.js";
+import FunctionCallUpdater from '../components/FunctionCallUpdater.js';
 
 import EntranceForm from '../components/EntranceForm.js';
 import TransactionsList from '../components/TransactionsList.js';
@@ -21,8 +22,7 @@ const entranceForm = new EntranceForm({
 
 
 const transactionsList = new TransactionsList('.transactions__list');
-
-const headingGenerator = new HeadingGenerator();
+const contractParser = new ContractParser(); // should be global because of caching inside
 
 document.querySelector('.entrance__form').addEventListener('submit', async function (e) {
   e.preventDefault();
@@ -30,10 +30,11 @@ document.querySelector('.entrance__form').addEventListener('submit', async funct
   entranceForm.disableInput();
 
   const transactions = await getSourceTransactions(account, 20);
-
+  const functionCallUpdaterQueue = [];
 
   if(transactions.length > 0) {
     transactionsList.clear();
+    
     transactions.forEach((item) => {      
       const trxBaseData = getTransactionBaseData(item, account);
       const trx = new Transaction(trxBaseData);
@@ -62,19 +63,27 @@ document.querySelector('.entrance__form').addEventListener('submit', async funct
       });
       
       transactionsList.renderTransaction(trxElement);
-
       if(trx.isFunctionCall()) {        
         trxElement = document.querySelector('.transactions__list .transaction:last-child'); // weird, I should refactor it
-        headingGenerator.push({
+        functionCallUpdaterQueue.push({
           headingElement: trxElement.querySelector('.transaction__heading'),
           iconElement: trxElement.querySelector('.transaction__icon'),
           trx: item,
-          account: account
         });
       }
     });
 
-    headingGenerator.generateHeadings();
+    if(functionCallUpdaterQueue.length > 0) {
+      for(let i = 0; i < functionCallUpdaterQueue.length; i++) {
+        const functionCallUpdater = new FunctionCallUpdater({
+          ...functionCallUpdaterQueue[i],
+          currentAccount: account,
+          parser: contractParser,
+        });
+        await functionCallUpdater.generateHeading();
+      }
+    }
+    
   } else {
     transactionsList.renderEmptyResult();
   }
