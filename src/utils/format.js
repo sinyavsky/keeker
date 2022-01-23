@@ -6,7 +6,7 @@ export function formatNearAmount(amount) {
 }
 
 // eslint-disable-next-line no-unused-vars
-export function formatTokenAmount(balance, nomination, fracDigits) {
+export function formatTokenAmount(balance, nomination) {
   // todo: add format logic
   return balance;
 }
