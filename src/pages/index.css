@@ -17,6 +17,13 @@
 @import url("../blocks/transaction/transaction.css");
 @import url("../blocks/transaction/_type/transaction_type_receive.css");
 @import url("../blocks/transaction/_type/transaction_type_send.css");
+@import url("../blocks/transaction/_type/transaction_type_add-key.css");
+@import url("../blocks/transaction/_type/transaction_type_delete-key.css");
+@import url("../blocks/transaction/_type/transaction_type_deploy.css");
+@import url("../blocks/transaction/_type/transaction_type_stake.css");
+@import url("../blocks/transaction/_type/transaction_type_create-account.css");
+@import url("../blocks/transaction/_type/transaction_type_delete-account.css");
+@import url("../blocks/transaction/_type/transaction_type_function.css");
 @import url("../blocks/transaction/__icon/transaction__icon.css");
 @import url("../blocks/transaction/__icon-picture/transaction__icon-picture.css");
 @import url("../blocks/transaction/__heading/transaction__heading.css");
