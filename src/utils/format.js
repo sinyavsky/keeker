@@ -10,3 +10,8 @@ export function formatTokenAmount(balance, nomination, fracDigits) {
   // todo: add format logic
   return balance;
 }
+
+export function formatDateFromNanoseconds(date) {
+  // todo: make nice formatting
+  return new Date(date / 1000000);
+}
