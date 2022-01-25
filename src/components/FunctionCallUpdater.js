@@ -8,7 +8,6 @@ export default class FunctionCallUpdater {
     this._headingElement = data.headingElement;
     this._iconElement = data.iconElement;
     this._currentAccount = data.currentAccount;
-    this._trx = data.trx;
     this._contractParser = data.contractParser;
     this._trxParser = new TransactionParser(data.trx);
   }
