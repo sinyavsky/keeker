@@ -78,7 +78,7 @@ document.querySelector('.entrance__form').addEventListener('submit', async funct
         const functionCallUpdater = new FunctionCallUpdater({
           ...functionCallUpdaterQueue[i],
           currentAccount: account,
-          parser: contractParser,
+          contractParser,
         });
         await functionCallUpdater.generateHeading();
       }

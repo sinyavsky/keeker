@@ -8,7 +8,7 @@ export default class FunctionCallUpdater {
     this._iconElement = data.iconElement;
     this._currentAccount = data.currentAccount;
     this._trx = data.trx;
-    this._parser = data.parser;
+    this._contractParser = data.contractParser;
   }
 
   async generateHeading() {
@@ -24,14 +24,14 @@ export default class FunctionCallUpdater {
       }
     }
     else {   
-      const contractData = await this._parser.getContractData(this._trx.receiver_id);
-      const contractInterface = this._parser.getInterface(contractData);
+      const contractData = await this._contractParser.getContractData(this._trx.receiver_id);
+      const contractInterface = this._contractParser.getInterface(contractData);
       if(contractInterface === CONTRACT_INTERFACE.FUNGIBLE_TOKEN) {
-        const metadata = await this._parser.ft_metadata(this._trx.receiver_id);
+        const metadata = await this._contractParser.ft_metadata(this._trx.receiver_id);
         this._heading = this._generateFtHeading(metadata);
       }
       else if(contractInterface === CONTRACT_INTERFACE.NON_FUNGIBLE_TOKEN) {
-        const metadata = await this._parser.nft_metadata(this._trx.receiver_id);
+        const metadata = await this._contractParser.nft_metadata(this._trx.receiver_id);
         this._heading = this._generateNftHeading(metadata);
       }
       else {
