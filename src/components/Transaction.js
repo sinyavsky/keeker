@@ -85,5 +85,5 @@ export default class Transaction {
     }
 
     return this._html;
-  }
+  };
 }

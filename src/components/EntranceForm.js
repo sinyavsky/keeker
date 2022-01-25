@@ -7,10 +7,10 @@ export default class EntranceForm {
   disableInput = () => {
     this._input.disabled = true;
     this._button.disabled = true;
-  }
+  };
 
   enableInput = () => {
     this._input.disabled = false;
     this._button.disabled = false;
-  }
+  };
 }

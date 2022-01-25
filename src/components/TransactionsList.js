@@ -13,5 +13,5 @@ export default class TransactionsList {
 
   renderTransaction = (transaction) => {
     this._html.append(transaction);
-  }
+  };
 }
