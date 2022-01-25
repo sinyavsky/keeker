@@ -61,4 +61,24 @@ export default class TransactionParser {
     return this._trx.args.beneficiary_id;
   }
 
+  getFunctionCallReceiver() {
+    return this._trx.receiver_id;
+  }
+
+  getFunctionCallMethod() {
+    return this._trx.args.method_name;
+  }
+
+  getFtTransferReceiver() {
+    return this._trx.args.args_json.receiver_id;
+  }
+
+  getFtTransferAmount() {
+    return this._trx.args.args_json.amount;
+  }
+
+  getFtTransferCallMessage() {
+    return this._trx.args.args_json.msg;
+  }
+
 }
