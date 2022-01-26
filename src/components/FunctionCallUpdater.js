@@ -12,19 +12,22 @@ export default class FunctionCallUpdater {
     this._trxParser = new TransactionParser(data.trx);
   }
 
+  _prepareIfAurora() {
+    if(this._trxParser.getFunctionCallReceiver() === 'wrap.near'
+    && this._trxParser.getFunctionCallMethod() === 'ft_transfer_call'
+    && this._trxParser.getFtTransferReceiver() === "aurora") {
+      const nearAmount = formatNearAmount(this._trxParser.getFtTransferAmount());
+      this._heading = `Wrap ${nearAmount} NEAR and send it to Aurora address 0x${this._trxParser.getFtTransferCallMessage()}`;
+      return true;
+    }
+    return false;
+  }
+
   async generateHeading() {
 
     this._heading = `Call function ${this._trxParser.getFunctionCallMethod()} from contract ${this._trxParser.getFunctionCallReceiver()}`; // default
 
-    if(this._trxParser.getFunctionCallReceiver() === 'wrap.near') {
-      if(this._trxParser.getFunctionCallMethod() === 'ft_transfer_call') {
-        if(this._trxParser.getFtTransferReceiver() === "aurora") { // aurora contract
-          const nearAmount = formatNearAmount(this._trxParser.getFtTransferAmount());
-          this._heading = `Wrap ${nearAmount} NEAR and send it to Aurora address 0x${this._trxParser.getFtTransferCallMessage()}`;
-        }
-      }
-    }
-    else {   
+    if(!this._prepareIfAurora()) {
       const contractData = await this._contractParser.getContractData(this._trxParser.getFunctionCallReceiver());
       const contractInterface = this._contractParser.getInterface(contractData);
       if(contractInterface === CONTRACT_INTERFACE.FUNGIBLE_TOKEN) {
@@ -39,7 +42,8 @@ export default class FunctionCallUpdater {
         this._iconElement.innerHTML = `<img src="${iconFunctionCall}" alt="" class="transaction__icon-picture">`;
       }
     }
-    this._headingElement.innerHTML = this._heading;  
+
+    this._headingElement.innerHTML = this._heading;
   }
 
   _generateFtHeading(metadata) {
