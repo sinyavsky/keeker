@@ -33,7 +33,7 @@ export default class FunctionCallUpdater {
       this._icon = `<img src="${metadata.icon}" alt="${metadata.name}" class="transaction__icon-picture">`;
     }
 
-    if(this._trxParser.getFunctionCallMethod() === "ft_transfer_call") { // todo: check also ft_transfer 
+    if(this._trxParser.getFunctionCallMethod() === "ft_transfer_call" || this._trxParser.getFunctionCallMethod() === "ft_transfer") {
       const tokenName = metadata.symbol === metadata.name ? metadata.symbol : `${metadata.symbol} (${metadata.name})`;
       const tokenAmount = formatTokenAmount(this._trxParser.getFtTransferAmount(), metadata.decimals);
       if(this._trxParser.getSignerId() === this._currentAccount) {
