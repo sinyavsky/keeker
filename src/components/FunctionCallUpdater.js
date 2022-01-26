@@ -10,6 +10,9 @@ export default class FunctionCallUpdater {
     this._currentAccount = data.currentAccount;
     this._contractParser = data.contractParser;
     this._trxParser = new TransactionParser(data.trx);
+
+    this._heading = '';
+    this._icon = '';
   }
 
   _prepareIfAurora() {
@@ -18,51 +21,71 @@ export default class FunctionCallUpdater {
     && this._trxParser.getFtTransferReceiver() === "aurora") {
       const nearAmount = formatNearAmount(this._trxParser.getFtTransferAmount());
       this._heading = `Wrap ${nearAmount} NEAR and send it to Aurora address 0x${this._trxParser.getFtTransferCallMessage()}`;
+      // todo: add aurora icon
       return true;
     }
     return false;
   }
 
-  async generateHeading() {
-
-    this._heading = `Call function ${this._trxParser.getFunctionCallMethod()} from contract ${this._trxParser.getFunctionCallReceiver()}`; // default
-
-    if(!this._prepareIfAurora()) {
-      const contractData = await this._contractParser.getContractData(this._trxParser.getFunctionCallReceiver());
-      const contractInterface = this._contractParser.getInterface(contractData);
-      if(contractInterface === CONTRACT_INTERFACE.FUNGIBLE_TOKEN) {
-        const metadata = await this._contractParser.ft_metadata(this._trxParser.getFunctionCallReceiver());
-        this._heading = this._generateFtHeading(metadata);
-      }
-      else if(contractInterface === CONTRACT_INTERFACE.NON_FUNGIBLE_TOKEN) {
-        const metadata = await this._contractParser.nft_metadata(this._trxParser.getFunctionCallReceiver());
-        this._heading = this._generateNftHeading(metadata);
-      }
-      else {
-        this._iconElement.innerHTML = `<img src="${iconFunctionCall}" alt="" class="transaction__icon-picture">`;
-      }
+  _prepareFtHeading(metadata) {
+    if(metadata.icon && metadata.icon.length > 0) {
+      this._icon = `<img src="${metadata.icon}" alt="${metadata.name}" class="transaction__icon-picture">`;
     }
 
-    this._headingElement.innerHTML = this._heading;
-  }
-
-  _generateFtHeading(metadata) {
-    if(this._trxParser.getFunctionCallMethod() === "ft_transfer_call") {
-      if(metadata.symbol.length > 0) {
-        this._iconElement.innerHTML = `<img src="${metadata.icon}" alt="${metadata.name}" class="transaction__icon-picture">`;
-      }
+    if(this._trxParser.getFunctionCallMethod() === "ft_transfer_call") { // todo: check also ft_transfer 
       const tokenName = metadata.symbol === metadata.name ? metadata.symbol : `${metadata.symbol} (${metadata.name})`;
       const tokenAmount = formatTokenAmount(this._trxParser.getFtTransferAmount(), metadata.decimals);
       if(this._trxParser.getSignerId() === this._currentAccount) {
-        return `Send ${tokenAmount} ${tokenName} to ${this._trxParser.getFtTransferReceiver()}`;
+        this._heading = `Send ${tokenAmount} ${tokenName} to ${this._trxParser.getFtTransferReceiver()}`;
+        return;
       }
-      return `Receive ${tokenAmount} ${tokenName} from ${this._trxParser.getFtTransferReceiver()}`;
+      this._heading = `Receive ${tokenAmount} ${tokenName} from ${this._trxParser.getFtTransferReceiver()}`;
+      return;
     }
-    return 'Interaction with Fungible token contract';
+    this._heading = `Call function ${this._trxParser.getFunctionCallMethod()} from Fungible token contract ${this._trxParser.getFunctionCallReceiver()}`;
   }
 
-  _generateNftHeading(metadata) {
-    return `Interraction with NFT contract <img src="${metadata.icon}" alt=""> ${metadata.symbol} (${metadata.name})`;
+  _prepareNftHeading(metadata) {
+    if(metadata.icon && metadata.icon.length > 0) {
+      this._icon = `<img src="${metadata.icon}" alt="${metadata.name}" class="transaction__icon-picture">`;
+    }
+
+    this._heading = `Interraction with NFT contract ${metadata.symbol} (${metadata.name})`;
   }
 
+  async _prepareHeading() {
+    if(this._prepareIfAurora()) {
+      return;
+    }
+
+    // todo: special method for wrap.near
+    
+    const contractData = await this._contractParser.getContractData(this._trxParser.getFunctionCallReceiver());
+    const contractInterface = this._contractParser.getInterface(contractData);
+    
+    if(contractInterface === CONTRACT_INTERFACE.FUNGIBLE_TOKEN) {
+      const metadata = await this._contractParser.ft_metadata(this._trxParser.getFunctionCallReceiver());
+      this._prepareFtHeading(metadata);
+    }
+    else if(contractInterface === CONTRACT_INTERFACE.NON_FUNGIBLE_TOKEN) {
+      const metadata = await this._contractParser.nft_metadata(this._trxParser.getFunctionCallReceiver());
+      this._prepareNftHeading(metadata);
+    }   
+  }
+
+  async generateHeading() {
+
+    await this._prepareHeading();
+
+    if(this._heading.length < 1) {
+      this._heading = `Call function ${this._trxParser.getFunctionCallMethod()} from contract ${this._trxParser.getFunctionCallReceiver()}`;
+    }
+
+    if(this._icon.length < 1) {
+      this._icon = `<img src="${iconFunctionCall}" alt="Function call" class="transaction__icon-picture">`;
+    }
+
+    this._headingElement.innerHTML = this._heading;
+    this._iconElement.innerHTML = this._icon;
+  }
 }
