@@ -1,6 +1,7 @@
 import { CONTRACT_INTERFACE } from '../utils/constants.js';
 import { formatNearAmount, formatTokenAmount } from "../utils/format.js";
 import iconFunctionCall from '../images/function-call.svg';
+import iconAurora from '../images/aurora.png';
 import TransactionParser from './TransactionParser.js';
 
 export default class FunctionCallUpdater {  
@@ -21,7 +22,7 @@ export default class FunctionCallUpdater {
     && this._trxParser.getFtTransferReceiver() === "aurora") {
       const nearAmount = formatNearAmount(this._trxParser.getFtTransferAmount());
       this._heading = `Wrap ${nearAmount} NEAR and send it to Aurora address 0x${this._trxParser.getFtTransferCallMessage()}`;
-      // todo: add aurora icon
+      this._icon = `<img src="${iconAurora}" alt="Aurora" class="transaction__icon-picture">`;
       return true;
     }
     return false;
