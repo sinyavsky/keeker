@@ -14,7 +14,8 @@ export default class FunctionCallUpdater {
     this._trxParser = new TransactionParser(data.trx);
 
     this._heading = '';
-    this._icon = '';
+    this._iconSrc = '';
+    this._iconAlt = '';
   }
 
   _prepareIfAurora() {
@@ -23,7 +24,8 @@ export default class FunctionCallUpdater {
     && this._trxParser.getFtTransferReceiver() === "aurora") {
       const nearAmount = formatNearAmount(this._trxParser.getFtTransferAmount());
       this._heading = `Wrap ${nearAmount} NEAR and send it to Aurora address 0x${this._trxParser.getFtTransferCallMessage()}`;
-      this._icon = `<img src="${iconAurora}" alt="Aurora" class="transaction__icon-picture">`;
+      this._iconSrc = iconAurora;
+      this._iconAlt = 'Aurora';
       return true;
     }
     return false;
@@ -33,7 +35,8 @@ export default class FunctionCallUpdater {
     if(this._trxParser.getFunctionCallReceiver() === 'launchpad.bocachica_mars.near'){
       if(this._trxParser.getFunctionCallMethod() === 'claim_refund') {
         this._heading = `Claim refund from Boca Chica launchpad sale #${this._trxParser.getBocaChicaSaleId()}`; // todo: sale name and description
-        this._icon = `<img src="${iconBocaChica}" alt="Boca Chica" class="transaction__icon-picture">`;
+        this._iconSrc = iconBocaChica;
+        this._iconAlt = 'Boca Chica Launchpad';
         return true;
       }
     }
@@ -42,7 +45,8 @@ export default class FunctionCallUpdater {
 
   _prepareFtHeading(metadata) {
     if(metadata.icon && metadata.icon.length > 0) {
-      this._icon = `<img src="${metadata.icon}" alt="${metadata.name}" class="transaction__icon-picture">`;
+      this._iconSrc = metadata.icon;
+      this._iconAlt = metadata.name;
     }
 
     const tokenName = metadata.symbol === metadata.name ? metadata.symbol : `${metadata.symbol} (${metadata.name})`;
@@ -74,7 +78,8 @@ export default class FunctionCallUpdater {
 
   _prepareNftHeading(metadata) {
     if(metadata.icon && metadata.icon.length > 0) {
-      this._icon = `<img src="${metadata.icon}" alt="${metadata.name}" class="transaction__icon-picture">`;
+      this._iconSrc = metadata.icon;
+      this._iconAlt = metadata.name;
     }
 
     this._heading = `Interraction with NFT contract ${metadata.symbol} (${metadata.name})`;
@@ -112,11 +117,12 @@ export default class FunctionCallUpdater {
       this._heading = `Call function ${this._trxParser.getFunctionCallMethod()} from contract ${this._trxParser.getFunctionCallReceiver()}`;
     }
 
-    if(this._icon.length < 1) {
-      this._icon = `<img src="${iconFunctionCall}" alt="Function call" class="transaction__icon-picture">`;
+    if(this._iconSrc.length < 1) {
+      this._iconSrc = iconFunctionCall;
+      this._iconAlt = 'Function Call';
     }
 
     this._headingElement.innerHTML = this._heading;
-    this._iconElement.innerHTML = this._icon;
+    this._iconElement.innerHTML = `<img src="${this._iconSrc}" alt="${this.__iconAlt}" class="transaction__icon-picture">`;
   }
 }
