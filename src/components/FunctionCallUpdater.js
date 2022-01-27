@@ -2,6 +2,7 @@ import { CONTRACT_INTERFACE } from '../utils/constants.js';
 import { formatNearAmount, formatTokenAmount } from "../utils/format.js";
 import iconFunctionCall from '../images/function-call.svg';
 import iconAurora from '../images/aurora.png';
+import iconBocaChica from '../images/boca-chica.png';
 import TransactionParser from './TransactionParser.js';
 
 export default class FunctionCallUpdater {  
@@ -24,6 +25,17 @@ export default class FunctionCallUpdater {
       this._heading = `Wrap ${nearAmount} NEAR and send it to Aurora address 0x${this._trxParser.getFtTransferCallMessage()}`;
       this._icon = `<img src="${iconAurora}" alt="Aurora" class="transaction__icon-picture">`;
       return true;
+    }
+    return false;
+  }
+
+  _prepareIfKnownContract() {
+    if(this._trxParser.getFunctionCallReceiver() === 'launchpad.bocachica_mars.near'){
+      if(this._trxParser.getFunctionCallMethod() === 'claim_refund') {
+        this._heading = `Claim refund from Boca Chica launchpad sale #${this._trxParser.getBocaChicaSaleId()}`; // todo: sale name and description
+        this._icon = `<img src="${iconBocaChica}" alt="Boca Chica" class="transaction__icon-picture">`;
+        return true;
+      }
     }
     return false;
   }
@@ -70,6 +82,10 @@ export default class FunctionCallUpdater {
 
   async _prepareHeading() {
     if(this._prepareIfAurora()) {
+      return;
+    }
+
+    if(this._prepareIfKnownContract()) {
       return;
     }
 
