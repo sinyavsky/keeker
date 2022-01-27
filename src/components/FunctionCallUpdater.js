@@ -87,7 +87,17 @@ export default class FunctionCallUpdater {
       this._iconAlt = metadata.name;
     }
 
-    this._heading = `Interraction with NFT contract ${metadata.symbol} (${metadata.name})`;
+    const tokenName = metadata.symbol === metadata.name ? metadata.symbol : `${metadata.symbol} (${metadata.name})`;
+    if(this._trxParser.getFunctionCallReceiver() === 'near-punks.near') {
+      if(this._trxParser.getFunctionCallMethod() === "master_mint") {
+        const mintData = this._trxParser.getNearPunksMasterMint();
+        const amount = mintData.nftAmount === 1 ? `1 NFT` : `${mintData.nftAmount} NFTs`;
+        this._heading = `Mint ${amount} for ${formatNearAmount(mintData.deposit)} NEAR from contract ${tokenName}`;
+      }
+      return;
+    }
+
+    this._heading = `Interraction with NFT contract ${tokenName}`;
   }
 
   async _prepareHeading() {

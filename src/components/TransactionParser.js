@@ -97,4 +97,11 @@ export default class TransactionParser {
     return this._trx.args.deposit;
   }
 
+  getNearPunksMasterMint() {
+    return {
+      deposit: this._trx.args.deposit,
+      nftAmount: this._trx.args.args_json.count,
+    };
+  }
+
 }
