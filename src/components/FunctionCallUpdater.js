@@ -1,6 +1,7 @@
 import { CONTRACT_INTERFACE } from '../utils/constants.js';
 import { formatNearAmount, formatTokenAmount } from "../utils/format.js";
 import iconFunctionCall from '../images/function-call.svg';
+import iconNear from '../images/near.svg';
 import iconAurora from '../images/aurora.png';
 import iconBocaChica from '../images/boca-chica.png';
 import TransactionParser from './TransactionParser.js';
@@ -77,6 +78,25 @@ export default class FunctionCallUpdater {
 
     }
 
+    // exclusive FT
+
+    else if(this._trxParser.getFunctionCallReceiver() === 'wrap.near') {
+
+      this._iconSrc = iconNear;
+      this._iconAlt = "Near";
+
+      if(this._trxParser.getFunctionCallMethod() === "near_deposit") {
+        const tokenAmount = formatNearAmount(this._trxParser.getWrapNearDepositAmount());
+        this._heading = `Wrap ${tokenAmount} NEAR using wrap.near contract`;        
+        return;
+      }
+      else if(this._trxParser.getFunctionCallMethod() === "near_withdraw") {
+        const tokenAmount = formatNearAmount(this._trxParser.getWrapNearWidthdrawAmount());
+        this._heading = `Unwrap ${tokenAmount} NEAR using wrap.near contract`;        
+        return;
+      }
+    }
+
 
     this._heading = `Call function ${this._trxParser.getFunctionCallMethod()} from Fungible token contract ${this._trxParser.getFunctionCallReceiver()}`;
   }
@@ -109,8 +129,6 @@ export default class FunctionCallUpdater {
       return;
     }
 
-    // todo: special method for wrap.near
-    
     const contractData = await this._contractParser.getContractData(this._trxParser.getFunctionCallReceiver());
     const contractInterface = this._contractParser.getInterface(contractData);
     

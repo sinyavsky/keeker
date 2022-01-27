@@ -104,4 +104,12 @@ export default class TransactionParser {
     };
   }
 
+  getWrapNearDepositAmount() {
+    return this._trx.args.deposit;
+  }
+
+  getWrapNearWidthdrawAmount() {
+    return this._trx.args.args_json.amount;
+  }
+
 }
