@@ -33,12 +33,17 @@ export default class FunctionCallUpdater {
 
   _prepareIfKnownContract() {
     if(this._trxParser.getFunctionCallReceiver() === 'launchpad.bocachica_mars.near'){
+      this._iconSrc = iconBocaChica;
+      this._iconAlt = 'Boca Chica Launchpad';
       if(this._trxParser.getFunctionCallMethod() === 'claim_refund') {
-        this._heading = `Claim refund from Boca Chica launchpad sale #${this._trxParser.getBocaChicaSaleId()}`; // todo: sale name and description
-        this._iconSrc = iconBocaChica;
-        this._iconAlt = 'Boca Chica Launchpad';
+        this._heading = `Claim refund from Boca Chica launchpad sale #${this._trxParser.getBocaChicaSaleId()}`; // todo: sale name and description        
         return true;
       }
+      else if(this._trxParser.getFunctionCallMethod() === 'join') {
+        this._heading = `Deposit ${formatNearAmount(this._trxParser.getBocaChicaJoinDeposit())} NEAR for joining Boca Chica launchpad`;
+        return true;
+      }
+
     }
     return false;
   }
