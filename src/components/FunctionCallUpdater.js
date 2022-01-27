@@ -33,8 +33,8 @@ export default class FunctionCallUpdater {
       this._icon = `<img src="${metadata.icon}" alt="${metadata.name}" class="transaction__icon-picture">`;
     }
 
-    if(this._trxParser.getFunctionCallMethod() === "ft_transfer_call" || this._trxParser.getFunctionCallMethod() === "ft_transfer") {
-      const tokenName = metadata.symbol === metadata.name ? metadata.symbol : `${metadata.symbol} (${metadata.name})`;
+    const tokenName = metadata.symbol === metadata.name ? metadata.symbol : `${metadata.symbol} (${metadata.name})`;
+    if(this._trxParser.getFunctionCallMethod() === "ft_transfer_call" || this._trxParser.getFunctionCallMethod() === "ft_transfer") {      
       const tokenAmount = formatTokenAmount(this._trxParser.getFtTransferAmount(), metadata.decimals);
       if(this._trxParser.getSignerId() === this._currentAccount) {
         this._heading = `Send ${tokenAmount} ${tokenName} to ${this._trxParser.getFtTransferReceiver()}`;
@@ -43,6 +43,20 @@ export default class FunctionCallUpdater {
       this._heading = `Receive ${tokenAmount} ${tokenName} from ${this._trxParser.getFtTransferReceiver()}`;
       return;
     }
+    else if(this._trxParser.getFunctionCallMethod() === "storage_deposit") {
+      const tokenAmount = formatNearAmount(this._trxParser.getStorageDepositAmount());
+      this._heading = `Deposit ${tokenAmount} NEAR into storage of ${tokenName} contract`;
+      if(this._trxParser.getStorageDepositReceiver() != this._currentAccount) {
+        this._heading += ` for account ${this._trxParser.getStorageDepositReceiver()}`;
+      }
+      return;
+    }
+
+    else if(this._trxParser.getFunctionCallMethod() === "storage_widthdraw") {// widthraw near from contract storage
+
+    }
+
+
     this._heading = `Call function ${this._trxParser.getFunctionCallMethod()} from Fungible token contract ${this._trxParser.getFunctionCallReceiver()}`;
   }
 

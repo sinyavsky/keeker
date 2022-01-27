@@ -81,4 +81,12 @@ export default class TransactionParser {
     return this._trx.args.args_json.msg;
   }
 
+  getStorageDepositReceiver() {
+    return this._trx.args.args_json.account_id;
+  }
+
+  getStorageDepositAmount() {
+    return this._trx.args.deposit;
+  }
+
 }
