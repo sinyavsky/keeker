@@ -64,6 +64,9 @@ export default class FunctionCallUpdater {
     if(metadata.icon && metadata.icon.length > 0) {
       this._prepareIcon(metadata.icon, metadata.name);
     }
+    else if(this._trxParser.getFunctionCallReceiver() === 'wrap.near') { // have empty icon in metadata
+      this._prepareIcon(iconNear, 'Wrapped NEAR');
+    }
 
     const tokenName = metadata.symbol === metadata.name ? metadata.symbol : `${metadata.symbol} (${metadata.name})`;
     if(this._trxParser.getFunctionCallMethod() === "ft_transfer_call" || this._trxParser.getFunctionCallMethod() === "ft_transfer") {      
@@ -91,8 +94,6 @@ export default class FunctionCallUpdater {
     // exclusive FT
 
     else if(this._trxParser.getFunctionCallReceiver() === 'wrap.near') {
-      this._prepareIcon(iconNear, 'Near');
-
       if(this._trxParser.getFunctionCallMethod() === "near_deposit") {
         const tokenAmount = formatNearAmount(this._trxParser.getWrapNearDepositAmount());
         this._heading = `Wrap ${tokenAmount} NEAR using wrap.near contract`;        
