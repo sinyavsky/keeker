@@ -19,14 +19,18 @@ export default class FunctionCallUpdater {
     this._iconAlt = '';
   }
 
+  _prepareIcon(src, alt) {
+    this._iconSrc = src;
+    this._iconAlt = alt;
+  }
+
   _prepareIfAurora() {
     if(this._trxParser.getFunctionCallReceiver() === 'wrap.near'
     && this._trxParser.getFunctionCallMethod() === 'ft_transfer_call'
     && this._trxParser.getFtTransferReceiver() === "aurora") {
       const nearAmount = formatNearAmount(this._trxParser.getFtTransferAmount());
       this._heading = `Wrap ${nearAmount} NEAR and send it to Aurora address 0x${this._trxParser.getFtTransferCallMessage()}`;
-      this._iconSrc = iconAurora;
-      this._iconAlt = 'Aurora';
+      this._prepareIcon(iconAurora, 'Aurora');
       return true;
     }
     return false;
@@ -34,8 +38,7 @@ export default class FunctionCallUpdater {
 
   _prepareIfKnownContract() {
     if(this._trxParser.getFunctionCallReceiver() === 'near') {
-      this._iconSrc = iconNear;
-      this._iconAlt = 'Near';
+      this._prepareIcon(iconNear, 'Near');
       const createdAccount = this._trxParser.getNearCreatedAccount();
       if(this._trxParser.getFunctionCallMethod() === 'create_account') {
         this._heading = `Create account ${createdAccount.name} and deposit ${formatNearAmount(createdAccount.deposit)} NEAR into it`;     
@@ -43,8 +46,7 @@ export default class FunctionCallUpdater {
       }
     }
     else if(this._trxParser.getFunctionCallReceiver() === 'launchpad.bocachica_mars.near') {
-      this._iconSrc = iconBocaChica;
-      this._iconAlt = 'Boca Chica Launchpad';
+      this._prepareIcon(iconBocaChica,'Boca Chica Launchpad');
       if(this._trxParser.getFunctionCallMethod() === 'claim_refund') {
         this._heading = `Claim refund from Boca Chica launchpad sale #${this._trxParser.getBocaChicaSaleId()}`; // todo: sale name and description        
         return true;
@@ -60,8 +62,7 @@ export default class FunctionCallUpdater {
 
   _prepareFtHeading(metadata) {
     if(metadata.icon && metadata.icon.length > 0) {
-      this._iconSrc = metadata.icon;
-      this._iconAlt = metadata.name;
+      this._prepareIcon(metadata.icon, metadata.name);
     }
 
     const tokenName = metadata.symbol === metadata.name ? metadata.symbol : `${metadata.symbol} (${metadata.name})`;
@@ -90,9 +91,7 @@ export default class FunctionCallUpdater {
     // exclusive FT
 
     else if(this._trxParser.getFunctionCallReceiver() === 'wrap.near') {
-
-      this._iconSrc = iconNear;
-      this._iconAlt = "Near";
+      this._prepareIcon(iconNear, 'Near');
 
       if(this._trxParser.getFunctionCallMethod() === "near_deposit") {
         const tokenAmount = formatNearAmount(this._trxParser.getWrapNearDepositAmount());
@@ -112,8 +111,7 @@ export default class FunctionCallUpdater {
 
   _prepareNftHeading(metadata) {
     if(metadata.icon && metadata.icon.length > 0) {
-      this._iconSrc = metadata.icon;
-      this._iconAlt = metadata.name;
+      this._prepareIcon(metadata.icon, metadata.name);
     }
 
     const tokenName = metadata.symbol === metadata.name ? metadata.symbol : `${metadata.symbol} (${metadata.name})`;
@@ -160,8 +158,7 @@ export default class FunctionCallUpdater {
     }
 
     if(this._iconSrc.length < 1) {
-      this._iconSrc = iconFunctionCall;
-      this._iconAlt = 'Function Call';
+      this._prepareIcon(iconFunctionCall, 'Function Call');
     }
 
     this._headingElement.innerHTML = this._heading;
