@@ -33,7 +33,16 @@ export default class FunctionCallUpdater {
   }
 
   _prepareIfKnownContract() {
-    if(this._trxParser.getFunctionCallReceiver() === 'launchpad.bocachica_mars.near'){
+    if(this._trxParser.getFunctionCallReceiver() === 'near') {
+      this._iconSrc = iconNear;
+      this._iconAlt = 'Near';
+      const createdAccount = this._trxParser.getNearCreatedAccount();
+      if(this._trxParser.getFunctionCallMethod() === 'create_account') {
+        this._heading = `Create account ${createdAccount.name} and deposit ${formatNearAmount(createdAccount.deposit)} NEAR into it`;     
+        return true;
+      }
+    }
+    else if(this._trxParser.getFunctionCallReceiver() === 'launchpad.bocachica_mars.near') {
       this._iconSrc = iconBocaChica;
       this._iconAlt = 'Boca Chica Launchpad';
       if(this._trxParser.getFunctionCallMethod() === 'claim_refund') {

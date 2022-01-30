@@ -49,7 +49,7 @@ export default class TransactionParser {
       undefined;
   }
 
-  getCreatedAccount() {
+  getCreatedAccount() { // action kind = CREATE ACCOUNT
     return this._trx.receiver_id;
   }
 
@@ -110,6 +110,13 @@ export default class TransactionParser {
 
   getWrapNearWidthdrawAmount() {
     return this._trx.args.args_json.amount;
+  }
+
+  getNearCreatedAccount() { // create account by contract near
+    return {
+      deposit: this._trx.args.deposit,
+      name: this._trx.args.args_json.new_account_id,
+    };
   }
 
 }
