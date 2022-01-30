@@ -119,4 +119,12 @@ export default class TransactionParser {
     };
   }
 
+  getValidatorDepositAndStakeAmount() {
+    return this._trx.args.deposit;
+  }
+
+  getValidatorUnstakeAmount() {
+    return this._trx.args.args_json.amount;
+  }
+
 }

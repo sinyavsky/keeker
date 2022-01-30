@@ -36,6 +36,31 @@ export default class FunctionCallUpdater {
     return false;
   }
 
+  _prepareIfValidator() {
+    if(this._trxParser.getFunctionCallReceiver() === 'aurora.poolv1.near') { // todo: implement a real check
+      this._prepareIcon(iconNear, 'NEAR');
+      if(this._trxParser.getFunctionCallMethod() === 'deposit_and_stake') {
+        const nearAmount = formatNearAmount(this._trxParser.getValidatorDepositAndStakeAmount());
+        this._heading = `Deposit and stake ${nearAmount} NEAR to the validator ${this._trxParser.getFunctionCallReceiver()}`;        
+        return true;
+      }
+      else if(this._trxParser.getFunctionCallMethod() === 'unstake') {
+        const nearAmount = formatNearAmount(this._trxParser.getValidatorUnstakeAmount());
+        this._heading = `Unstake ${nearAmount} NEAR from the validator ${this._trxParser.getFunctionCallReceiver()}`;        
+        return true;
+      }
+      else if(this._trxParser.getFunctionCallMethod() === 'withdraw_all') {
+        this._heading = `Widthdraw all available NEAR from the validator ${this._trxParser.getFunctionCallReceiver()}`;        
+        return true;
+      }
+      else if(this._trxParser.getFunctionCallMethod() === 'unstake_all') {
+        this._heading = `Unstake all available NEAR from the validator ${this._trxParser.getFunctionCallReceiver()}`;        
+        return true;
+      }
+    }
+    return false;
+  }
+
   _prepareIfKnownContract() {
     if(this._trxParser.getFunctionCallReceiver() === 'near') {
       this._prepareIcon(iconNear, 'Near');
@@ -130,6 +155,10 @@ export default class FunctionCallUpdater {
 
   async _prepareHeading() {
     if(this._prepareIfAurora()) {
+      return;
+    }
+
+    if(this._prepareIfValidator()) {
       return;
     }
 
