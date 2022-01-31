@@ -37,11 +37,12 @@ export default class ContractParser {
     this._cachedMetadata[account_id] = data;
   }
 
-  async getValidatorsList() {
+  async prepareValidatorsList() {
 
     if(this._cachedValidators !== false) {
-      return this._cachedValidators;
+      return;
     }
+
     try {
       const currentValidators = (await this._near.connection.provider.validators(null)).current_validators;
       this._cachedValidators = currentValidators.reduce(function(res, current) {
@@ -53,8 +54,12 @@ export default class ContractParser {
     catch(error) {
       this._cachedValidators = [];
     }
-    return this._cachedValidators;
   }
+
+  async isValidator(account) {
+    return this._cachedValidators.includes(account);
+  }
+
 
   async getContractData(account_id) {
     const cache = this._getContractFromCache(account_id);
