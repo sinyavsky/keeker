@@ -37,7 +37,7 @@ export default class FunctionCallUpdater {
   }
 
   _prepareIfValidator() {
-    if(this._trxParser.getFunctionCallReceiver() === 'aurora.poolv1.near') { // todo: implement a real check
+    if(this._contractParser.isValidator(this._trxParser.getFunctionCallReceiver())) {
       this._prepareIcon(iconNear, 'NEAR');
       if(this._trxParser.getFunctionCallMethod() === 'deposit_and_stake') {
         const nearAmount = formatNearAmount(this._trxParser.getValidatorDepositAndStakeAmount());
