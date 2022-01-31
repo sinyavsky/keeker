@@ -6,6 +6,12 @@
   <title>Keeker!</title>
 </head>
 <body class="page">
+
+  <aside class="sidebar">
+    <p class="sidebar__heading">Keeker</p>
+    <p class="sidebar__description">View NEAR accounts activity in a human readable format</p>
+  </aside>
+
   <main class="content">
     <section class="entrance">
       <h1 class="entrance__heading">Submit NEAR account ID:</h1>
@@ -19,17 +25,13 @@
       </ul>
     </section>
   </main>
-  <aside class="sidebar">
-    <h2 class="sidebar__heading">Keeker</h2>
-    <p class="sidebar__description">View NEAR accounts activity in a human readable format</p>
-  </aside>
 
   <template class="transaction-template">
     <li class="transaction">
       <div class="transaction__icon">
         <div class="loader"></div>
       </div>
-      <div>
+      <div class="transaction__body">
         <h3 class="transaction__heading"></h3>
         <p class="transaction__hash">Hash: <a href="https://explorer.near.org/transactions/" class="transaction__hashlink" title="View transaction at explorer.near.org" target="_blank"></a></p>
         <p class="transaction__time"></p>

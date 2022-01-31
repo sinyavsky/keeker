@@ -1,6 +1,7 @@
 .transaction__hashlink {
-  color: inherit;
+  color: #536dfe;
   transition: opacity ease .5s;
+  word-break: break-all;
 }
 
 .transaction__hashlink:hover {

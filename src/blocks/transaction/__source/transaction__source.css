@@ -2,4 +2,6 @@
   display: none;
   overflow-x: auto;
   margin: 16px 0 0;
+  border: 1px solid #ebebeb;
+  padding: 20px;
 }

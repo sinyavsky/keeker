@@ -1,7 +1,10 @@
+.content {
+  padding: 24px 16px 0;
+  box-sizing: border-box;
+}
+
 @media screen and (min-width: 768px) {
   .content {
-    flex-grow: 1;
-    order: 2;
-    padding: 36px 72px;
+    padding: 74px 72px 24px 272px;
   }
 }

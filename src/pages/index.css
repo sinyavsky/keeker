@@ -25,6 +25,7 @@
 @import url("../blocks/transaction/_type/transaction_type_delete-account.css");
 @import url("../blocks/transaction/_type/transaction_type_function.css");
 @import url("../blocks/transaction/__icon/transaction__icon.css");
+@import url("../blocks/transaction/__body/transaction__body.css");
 @import url("../blocks/transaction/__icon-picture/transaction__icon-picture.css");
 @import url("../blocks/transaction/__heading/transaction__heading.css");
 @import url("../blocks/transaction/__hash/transaction__hash.css");

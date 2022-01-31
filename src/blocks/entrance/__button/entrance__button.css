@@ -1,13 +1,25 @@
 .entrance__button {
-  flex-shrink: 0;
-  display: block;
-  border: 0;
-  background-color: #29caf0;
+  min-width: 80px;
+  padding: 7px 16px;
+  border-radius: 24px;
+  background-color: #ff5252;
+  transition: background-color .5s ease-in-out;
   color: #fff;
-  padding: 12px 25px;
-  text-transform: uppercase;
-  font-weight: bold;
+  text-align: center;
+  flex-shrink: 0;
+  border: 0;
+  text-decoration: none;
   cursor: pointer;
-  border-top-right-radius: 8px;
-  border-bottom-right-radius: 8px;
+  display: inline-block;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.entrance__button:hover {
+  background-color: #ff6262;
+}
+
+.entrance__button:disabled {
+  cursor: default;
+  opacity: .5;
 }
