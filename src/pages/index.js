@@ -23,13 +23,13 @@ const entranceForm = new EntranceForm({
 
 const transactionsList = new TransactionsList('.transactions__list');
 const contractParser = new ContractParser(); // should be global because of caching inside
-
+await contractParser.prepareValidatorsList();
 document.querySelector('.entrance__form').addEventListener('submit', async function (e) {
   e.preventDefault();
   const account = this.querySelector('.entrance__input').value;
   entranceForm.disableInput();
 
-  const transactions = await getSourceTransactions(account, 20);
+  const transactions = await getSourceTransactions(account, 100);
   const functionCallUpdaterQueue = [];
 
   if(transactions.length > 0) {
