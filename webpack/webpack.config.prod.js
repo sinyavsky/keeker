@@ -19,6 +19,9 @@ module.exports = merge(common, {
     new MiniCssExtractPlugin({
       filename: 'bundle.css',
     }),
+    new Webpack.ProvidePlugin({
+      Buffer: ['buffer', 'Buffer'],
+    }),
   ],
   experiments: {
     topLevelAwait: true
