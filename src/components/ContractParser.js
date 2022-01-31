@@ -1,4 +1,4 @@
-import { Near } from 'near-api-js';
+import {  Near } from 'near-api-js';
 import { parseContract } from 'near-contract-parser';
 import { CONTRACT_INTERFACE } from '../utils/constants.js';
 
@@ -18,6 +18,7 @@ export default class ContractParser {
 
     this._cachedContracts = {};
     this._cachedMetadata = {};
+    this._cachedValidators = false;
   }
 
   _getContractFromCache(account_id) {
@@ -34,6 +35,25 @@ export default class ContractParser {
 
   _addMetadataToCache(account_id, data) {
     this._cachedMetadata[account_id] = data;
+  }
+
+  async getValidatorsList() {
+
+    if(this._cachedValidators !== false) {
+      return this._cachedValidators;
+    }
+    try {
+      const currentValidators = (await this._near.connection.provider.validators(null)).current_validators;
+      this._cachedValidators = currentValidators.reduce(function(res, current) {
+        res.push(current.account_id);
+        return res;
+      }, []);
+    }
+
+    catch(error) {
+      this._cachedValidators = [];
+    }
+    return this._cachedValidators;
   }
 
   async getContractData(account_id) {
