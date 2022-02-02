@@ -5,10 +5,13 @@ export function formatNearAmount(amount) {
   return utils.format.formatNearAmount(amount, 2);
 }
 
-// eslint-disable-next-line no-unused-vars
 export function formatTokenAmount(balance, nomination) {
-  // todo: add format logic
-  return balance;
+  balance = balance.toString();
+  const pos = balance.length - parseInt(nomination);
+  if(pos > 0) {
+    return parseFloat(`${balance.slice(0, pos)}.${balance.slice(pos)}`);
+  }
+  return parseFloat(`${'0'.repeat(pos+1)}.${balance}`);
 }
 
 export function formatDateFromNanoseconds(timestamp) {
