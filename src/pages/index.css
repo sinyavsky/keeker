@@ -1,6 +1,8 @@
 @import url("../vendor/normalize.css");
 @import url("../vendor/pretty-print-json.css");
 
+@import url("../fonts/inter.css");
+
 @import url("../blocks/page/page.css");
 @import url("../blocks/sidebar/sidebar.css");
 @import url("../blocks/sidebar/__heading/sidebar__heading.css");
