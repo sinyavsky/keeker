@@ -11,7 +11,16 @@ export function formatTokenAmount(balance, nomination) {
   return balance;
 }
 
-export function formatDateFromNanoseconds(date) {
-  // todo: make nice formatting
-  return new Date(date / 1000000);
+export function formatDateFromNanoseconds(timestamp) {
+  const date = new Date(timestamp / 1000000);
+  const options = {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric',
+    hour12: false,
+  };
+  return new Intl.DateTimeFormat('default', options).format(date);
 }
