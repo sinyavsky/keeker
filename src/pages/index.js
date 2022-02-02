@@ -51,15 +51,6 @@ document.querySelector('.entrance__form').addEventListener('submit', async funct
         // classes
         iconPicClass: 'transaction__icon-picture',
         sourceVisibleClass: 'transaction__source_visible',
-        trxTypeFunctionClass: 'transaction_type_function',
-        trxTypeReceiveClass: 'transaction_type_receive',
-        trxTypeSendClass: 'transaction_type_send',
-        trxTypeAddKeyClass: 'transaction_type_add-key',
-        trxTypeDeleteKeyClass: 'transaction_type_delete-key',
-        trxTypeDeployClass: 'transaction_type_deploy',
-        trxTypeStakeClass: 'transaction_type_stake',
-        trxTypeCreateAccountClass: 'transaction_type_create-account',
-        trxTypeDeleteAccountClass: 'transaction_type_delete-account',
       });
       
       transactionsList.renderTransaction(trxElement);

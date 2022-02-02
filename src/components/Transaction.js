@@ -1,4 +1,4 @@
-import { ACTION_KIND, ACTION_DIRECTION } from '../utils/constants.js';
+import { ACTION_KIND/*, ACTION_DIRECTION*/ } from '../utils/constants.js';
 import { formatDateFromNanoseconds } from '../utils/format.js';
 import { prettyPrintJson } from 'pretty-print-json';
 
@@ -21,36 +21,29 @@ export default class Transaction {
 
   createHtmlElement = (sel) => {
     this._html = document.querySelector(sel.template).content.cloneNode(true);  
-    const transaction = this._html.querySelector(sel.transaction);
+    //const transaction = this._html.querySelector(sel.transaction);
     switch(this._actionKind) {
       case ACTION_KIND.FUNCTION_CALL:
-        transaction.classList.add(sel.trxTypeFunctionClass);
       break;
       case ACTION_KIND.TRANSFER:
-        if(this._actionDirection === ACTION_DIRECTION.IN) {
-          transaction.classList.add(sel.trxTypeReceiveClass);
+        /*if(this._actionDirection === ACTION_DIRECTION.IN) {
+
         }
         else if(this._actionDirection === ACTION_DIRECTION.OUT) {
-          transaction.classList.add(sel.trxTypeSendClass);
-        }
+
+        }*/
       break;
       case ACTION_KIND.ADD_KEY:
-        transaction.classList.add(sel.trxTypeAddKeyClass);
       break;
       case ACTION_KIND.DELETE_KEY:
-        transaction.classList.add(sel.trxTypeDeleteKeyClass);
       break;
       case ACTION_KIND.DEPLOY_CONTRACT:
-        transaction.classList.add(sel.trxTypeDeployClass);
       break;
       case ACTION_KIND.STAKE:
-        transaction.classList.add(sel.trxTypeStakeClass);
       break;
       case ACTION_KIND.CREATE_ACCOUNT:
-        transaction.classList.add(sel.trxTypeCreateAccountClass);
       break;
       case ACTION_KIND.DELETE_ACCOUNT:
-        transaction.classList.add(sel.trxTypeDeleteAccountClass);
       break;      
     }
 
