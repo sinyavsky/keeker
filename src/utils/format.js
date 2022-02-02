@@ -1,8 +1,7 @@
 import { utils } from "near-api-js";
 
 export function formatNearAmount(amount) {
-  // todo: add format for small amount, like 0.0001 and so
-  return utils.format.formatNearAmount(amount, 2);
+  return utils.format.formatNearAmount(amount);
 }
 
 export function formatTokenAmount(balance, nomination) {
