@@ -1,8 +1,8 @@
-import {  Near } from 'near-api-js';
+import { Near } from 'near-api-js';
 import { parseContract } from 'near-contract-parser';
-import { nearConnectionConfig } from './utils/constants';
+import { nearConnectionConfig } from '../utils/constants.js';
 
-export default class ContractParser {
+export default class ContractApi {
 
   constructor() {
     this._near = new Near(nearConnectionConfig);

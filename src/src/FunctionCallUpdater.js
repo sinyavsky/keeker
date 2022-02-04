@@ -12,7 +12,7 @@ export default class FunctionCallUpdater {
     this._headingElement = data.headingElement;
     this._iconElement = data.iconElement;
     this._currentAccount = data.currentAccount;
-    this._contractParser = data.contractParser;
+    this._contractApi = data.contractApi;
     this._validatorsList = data.validatorsList;
     this._trxParser = new TransactionParser(data.trx);
 
@@ -172,15 +172,15 @@ export default class FunctionCallUpdater {
       return;
     }
 
-    const contractData = await this._contractParser.getContractData(this._trxParser.getFunctionCallReceiver());
+    const contractData = await this._contractApi.getContractData(this._trxParser.getFunctionCallReceiver());
     const contractInterface = parseContractInterface(contractData);
     
     if(contractInterface === CONTRACT_INTERFACE.FUNGIBLE_TOKEN) {
-      const metadata = await this._contractParser.ft_metadata(this._trxParser.getFunctionCallReceiver());
+      const metadata = await this._contractApi.ft_metadata(this._trxParser.getFunctionCallReceiver());
       this._prepareFtHeading(metadata);
     }
     else if(contractInterface === CONTRACT_INTERFACE.NON_FUNGIBLE_TOKEN) {
-      const metadata = await this._contractParser.nft_metadata(this._trxParser.getFunctionCallReceiver());
+      const metadata = await this._contractApi.nft_metadata(this._trxParser.getFunctionCallReceiver());
       this._prepareNftHeading(metadata);
     }   
   }
