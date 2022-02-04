@@ -1,6 +1,6 @@
-import { ACTION_KIND, ACTION_DIRECTION } from '../utils/constants.js';
+import { ACTION_KIND, ACTION_DIRECTION } from './utils/constants.js';
 import TransactionParser from './TransactionParser.js';
-import { formatNearAmount } from "../utils/format.js";
+import { formatNearAmount } from "./utils/format.js";
 import iconNear from '../images/near.svg';
 import iconKey from '../images/key.svg';
 import iconContract from '../images/contract.svg';

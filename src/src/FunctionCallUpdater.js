@@ -1,5 +1,5 @@
-import { CONTRACT_INTERFACE } from '../utils/constants.js';
-import { formatNearAmount, formatTokenAmount } from "../utils/format.js";
+import { CONTRACT_INTERFACE } from './utils/constants.js';
+import { formatNearAmount, formatTokenAmount } from './utils/format.js';
 import iconFunctionCall from '../images/function-call.svg';
 import iconNear from '../images/near.svg';
 import iconAurora from '../images/aurora.png';

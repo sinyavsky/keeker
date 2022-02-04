@@ -4,15 +4,14 @@ if (process.env.NODE_ENV === 'development') {
   require('../index.html');
 }
 
-import getSourceTransactions from '../components/getSourceTransactions.js';
-import getTransactionBaseData from '../components/getTransactionBaseData.js';
-import ContractParser from "../components/ContractParser.js";
-import FunctionCallUpdater from '../components/FunctionCallUpdater.js';
+import getSourceTransactions from '../src/api/getSourceTransactions.js';
+import getTransactionBaseData from '../src/getTransactionBaseData.js';
+import ContractParser from '../src/ContractParser.js';
+import FunctionCallUpdater from '../src/FunctionCallUpdater.js';
 
-import EntranceForm from '../components/EntranceForm.js';
-import TransactionsList from '../components/TransactionsList.js';
-import Transaction from '../components/Transaction.js';
-
+import EntranceForm from '../src/view/EntranceForm.js';
+import TransactionsList from '../src/view/TransactionsList.js';
+import Transaction from '../src/view/Transaction.js';
 
 
 const entranceForm = new EntranceForm({

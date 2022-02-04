@@ -1,6 +1,6 @@
 import {  Near } from 'near-api-js';
 import { parseContract } from 'near-contract-parser';
-import { CONTRACT_INTERFACE } from '../utils/constants.js';
+import { CONTRACT_INTERFACE } from './utils/constants.js';
 
 export default class ContractParser {
 
