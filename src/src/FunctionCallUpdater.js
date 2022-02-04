@@ -185,7 +185,7 @@ export default class FunctionCallUpdater {
     }   
   }
 
-  async generateHeading() {
+  async update() {
 
     await this._prepareHeading();
 

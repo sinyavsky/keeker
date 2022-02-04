@@ -73,7 +73,7 @@ document.querySelector('.entrance__form').addEventListener('submit', async funct
           contractApi,
           validatorsList,
         });
-        await functionCallUpdater.generateHeading();
+        await functionCallUpdater.update();
       }
     }
     
