@@ -1,3 +1,14 @@
+export const nearConnectionConfig = {
+  networkId: 'mainnet',
+  keyStore: {},
+  nodeUrl: 'https://rpc.ankr.com/near', // https://rpc.mainnet.near.org
+  archivalUrl: 'https://archival-rpc.mainnet.near.org',
+  walletUrl: 'https://wallet.mainnet.near.org',
+  helperUrl: 'https://helper.mainnet.near.org',
+  explorerUrl: 'https://explorer.mainnet.near.org',
+};
+
+
 // enums
 
 export const ACTION_KIND = { 

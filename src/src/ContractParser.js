@@ -1,19 +1,11 @@
 import {  Near } from 'near-api-js';
 import { parseContract } from 'near-contract-parser';
+import { nearConnectionConfig } from './utils/constants';
 
 export default class ContractParser {
 
   constructor() {
-    this._near = new Near({
-      networkId: 'mainnet',
-      keyStore: {},
-      //nodeUrl: 'https://rpc.mainnet.near.org',
-      nodeUrl: 'https://rpc.ankr.com/near',
-      archivalUrl: 'https://archival-rpc.mainnet.near.org',
-      walletUrl: 'https://wallet.mainnet.near.org',
-      helperUrl: 'https://helper.mainnet.near.org',
-      explorerUrl: 'https://explorer.mainnet.near.org',
-    });
+    this._near = new Near(nearConnectionConfig);
 
     this._cachedContracts = {};
     this._cachedMetadata = {};
