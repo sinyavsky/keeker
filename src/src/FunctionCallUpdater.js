@@ -5,6 +5,7 @@ import iconNear from '../images/near.svg';
 import iconAurora from '../images/aurora.png';
 import iconBocaChica from '../images/boca-chica.png';
 import TransactionParser from './parser/TransactionParser.js';
+import parseContractInterface from './parser/parseContractInterface.js';
 
 export default class FunctionCallUpdater {  
   constructor(data) {
@@ -167,7 +168,7 @@ export default class FunctionCallUpdater {
     }
 
     const contractData = await this._contractParser.getContractData(this._trxParser.getFunctionCallReceiver());
-    const contractInterface = this._contractParser.getInterface(contractData);
+    const contractInterface = parseContractInterface(contractData);
     
     if(contractInterface === CONTRACT_INTERFACE.FUNGIBLE_TOKEN) {
       const metadata = await this._contractParser.ft_metadata(this._trxParser.getFunctionCallReceiver());
