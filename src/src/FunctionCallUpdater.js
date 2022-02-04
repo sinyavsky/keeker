@@ -13,6 +13,7 @@ export default class FunctionCallUpdater {
     this._iconElement = data.iconElement;
     this._currentAccount = data.currentAccount;
     this._contractParser = data.contractParser;
+    this._validatorsList = data.validatorsList;
     this._trxParser = new TransactionParser(data.trx);
 
     this._heading = '';
@@ -37,8 +38,12 @@ export default class FunctionCallUpdater {
     return false;
   }
 
+  _isValidator(account) {
+    return this._validatorsList.includes(account);
+  }
+
   _prepareIfValidator() {
-    if(this._contractParser.isValidator(this._trxParser.getFunctionCallReceiver())) {
+    if(this._isValidator(this._trxParser.getFunctionCallReceiver())) {
       this._prepareIcon(iconNear, 'NEAR');
       if(this._trxParser.getFunctionCallMethod() === 'deposit_and_stake') {
         const nearAmount = formatNearAmount(this._trxParser.getValidatorDepositAndStakeAmount());

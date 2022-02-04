@@ -5,6 +5,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 import getSourceTransactions from '../src/api/getSourceTransactions.js';
+import getValidatorsList from '../src/api/getValidatorsList.js';
 import getTransactionBaseData from '../src/getTransactionBaseData.js';
 import ContractParser from '../src/ContractParser.js';
 import FunctionCallUpdater from '../src/FunctionCallUpdater.js';
@@ -22,7 +23,7 @@ const entranceForm = new EntranceForm({
 
 const transactionsList = new TransactionsList('.transactions__list');
 const contractParser = new ContractParser(); // should be global because of caching inside
-await contractParser.prepareValidatorsList();
+const validatorsList = await getValidatorsList();
 document.querySelector('.entrance__form').addEventListener('submit', async function (e) {
   e.preventDefault();
   const account = this.querySelector('.entrance__input').value;
@@ -69,6 +70,7 @@ document.querySelector('.entrance__form').addEventListener('submit', async funct
           ...functionCallUpdaterQueue[i],
           currentAccount: account,
           contractParser,
+          validatorsList,
         });
         await functionCallUpdater.generateHeading();
       }
