@@ -12,6 +12,7 @@ import getTransactionBaseData from '../src/getTransactionBaseData.js';
 import FunctionCallUpdater from '../src/FunctionCallUpdater.js';
 
 import EntranceForm from '../src/view/EntranceForm.js';
+import ProgressBar from '../src/view/ProgressBar.js';
 import TransactionsList from '../src/view/TransactionsList.js';
 import Transaction from '../src/view/Transaction.js';
 
@@ -19,6 +20,14 @@ import Transaction from '../src/view/Transaction.js';
 const entranceForm = new EntranceForm({
   input: '.entrance__input',
   button: '.entrance__button'
+});
+
+const progressBar = new ProgressBar({
+  progressBar: '.progress-bar',
+  text: '.progress-bar__text',
+  current: '.progress-bar__current',
+  total: '.progress-bar__total',  
+  progressBarVisible: 'progress-bar_visible',
 });
 
 
@@ -35,8 +44,9 @@ document.querySelector('.entrance__form').addEventListener('submit', async funct
 
   if(transactions.length > 0) {
     transactionsList.clear();
+    progressBar.reset(transactions.length);
     
-    transactions.forEach((item) => {      
+    transactions.forEach((item) => {
       const trxBaseData = getTransactionBaseData(item, account);
       const trx = new Transaction(trxBaseData);
       let trxElement = trx.createHtmlElement({
@@ -55,7 +65,7 @@ document.querySelector('.entrance__form').addEventListener('submit', async funct
       });
       
       transactionsList.renderTransaction(trxElement);
-      if(trx.isFunctionCall()) {        
+      if(trx.isFunctionCall()) {
         trxElement = document.querySelector('.transactions__list .transaction:last-child'); // weird, I should refactor it
         functionCallUpdaterQueue.push({
           headingElement: trxElement.querySelector('.transaction__heading'),
@@ -63,10 +73,14 @@ document.querySelector('.entrance__form').addEventListener('submit', async funct
           trx: item,
         });
       }
+      else {
+        progressBar.increment();
+      }
     });
 
     if(functionCallUpdaterQueue.length > 0) {
       for(let i = 0; i < functionCallUpdaterQueue.length; i++) {
+        progressBar.increment();
         const functionCallUpdater = new FunctionCallUpdater({
           ...functionCallUpdaterQueue[i],
           currentAccount: account,
@@ -76,6 +90,8 @@ document.querySelector('.entrance__form').addEventListener('submit', async funct
         await functionCallUpdater.update();
       }
     }
+
+    progressBar.finish();
     
   } else {
     transactionsList.renderEmptyResult();

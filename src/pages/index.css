@@ -14,6 +14,9 @@
 @import url("../blocks/entrance/__input/entrance__input.css");
 @import url("../blocks/entrance/__button/entrance__button.css");
 
+@import url("../blocks/progress-bar/progress-bar.css");
+@import url("../blocks/progress-bar/_visible/progress-bar_visible.css");
+
 @import url("../blocks/transactions/transactions.css");
 @import url("../blocks/transactions/__list/transactions__list.css");
 @import url("../blocks/transaction/transaction.css");
