@@ -4,7 +4,7 @@ import iconFunctionCall from '../images/function-call.svg';
 import iconNear from '../images/near.svg';
 import iconAurora from '../images/aurora.png';
 import iconBocaChica from '../images/boca-chica.png';
-import TransactionParser from './TransactionParser.js';
+import TransactionParser from './parser/TransactionParser.js';
 
 export default class FunctionCallUpdater {  
   constructor(data) {
