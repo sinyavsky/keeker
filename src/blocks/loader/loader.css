@@ -1,16 +1,16 @@
 .loader {
   display: inline-block;
-  width: 64px;
-  height: 64px;
+  width: 32px;
+  height: 32px;
 }
 .loader:after {
   content: " ";
   display: block;
-  width: 48px;
-  height: 48px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
-  border: 6px solid #29caf0;
-  border-color: #29caf0 transparent #29caf0 transparent;
+  border: 3px solid #f65052;
+  border-color: #f65052 transparent #f65052 transparent;
   animation: theloader 1.2s linear infinite;
 }
 @keyframes theloader {
