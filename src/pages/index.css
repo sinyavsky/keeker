@@ -16,6 +16,7 @@
 
 @import url("../blocks/progress-bar/progress-bar.css");
 @import url("../blocks/progress-bar/_visible/progress-bar_visible.css");
+@import url("../blocks/progress-bar/__loader/_hidden/progress-bar__loader_hidden.css");
 
 @import url("../blocks/transactions/transactions.css");
 @import url("../blocks/transactions/__list/transactions__list.css");

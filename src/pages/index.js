@@ -24,10 +24,12 @@ const entranceForm = new EntranceForm({
 
 const progressBar = new ProgressBar({
   progressBar: '.progress-bar',
+  loader: '.progress-bar__loader',
   text: '.progress-bar__text',
   current: '.progress-bar__current',
   total: '.progress-bar__total',  
   progressBarVisible: 'progress-bar_visible',
+  loaderHidden: 'progress-bar__loader_hidden',
 });
 
 
