@@ -18,7 +18,8 @@ import Transaction from '../src/view/Transaction.js';
 
 
 const entranceForm = new EntranceForm({
-  input: '.entrance__input',
+  form: '.entrance__form',
+  account: '.entrance__input_type_account',
   button: '.entrance__button'
 });
 
@@ -36,9 +37,9 @@ const progressBar = new ProgressBar({
 const transactionsList = new TransactionsList('.transactions__list');
 const contractApi = new ContractApi(); // should be global because of caching inside
 const validatorsList = await getValidatorsList();
-document.querySelector('.entrance__form').addEventListener('submit', async function (e) {
+entranceForm.addSubmitListener(async function (e) {
   e.preventDefault();
-  const account = this.querySelector('.entrance__input').value;
+  const account = entranceForm.getAccountName();
   entranceForm.disableInput();
 
   const transactions = await getSourceTransactions(account, 100);
