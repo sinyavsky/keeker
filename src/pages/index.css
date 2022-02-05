@@ -9,6 +9,9 @@
 @import url("../blocks/sidebar/__description/sidebar__description.css");
 
 @import url("../blocks/content/content.css");
+@import url("../blocks/loader/loader.css");
+@import url("../blocks/loader/_size/loader_size_small.css");
+
 @import url("../blocks/entrance/__heading/entrance__heading.css");
 @import url("../blocks/entrance/__form/entrance__form.css");
 @import url("../blocks/entrance/__input/entrance__input.css");
@@ -32,5 +35,3 @@
 @import url("../blocks/transaction/__more/transaction__more.css");
 @import url("../blocks/transaction/__source/transaction__source.css");
 @import url("../blocks/transaction/__source/_visible/transaction__source_visible.css");
-
-@import url("../blocks/loader/loader.css");
