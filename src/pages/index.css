@@ -12,6 +12,7 @@
 @import url("../blocks/loader/loader.css");
 @import url("../blocks/loader/_size/loader_size_small.css");
 
+@import url("../blocks/entrance/entrance.css");
 @import url("../blocks/entrance/__heading/entrance__heading.css");
 @import url("../blocks/entrance/__form/entrance__form.css");
 @import url("../blocks/entrance/__input/entrance__input.css");
