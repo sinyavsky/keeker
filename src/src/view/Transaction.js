@@ -1,4 +1,4 @@
-import { ACTION_KIND/*, ACTION_DIRECTION*/ } from '../utils/constants.js';
+import { ACTION_KIND, ACTION_DIRECTION } from '../utils/constants.js';
 import { formatDateFromNanoseconds } from '../utils/format.js';
 import { prettyPrintJson } from 'pretty-print-json';
 
@@ -21,21 +21,23 @@ export default class Transaction {
 
   createHtmlElement = (sel) => {
     this._html = document.querySelector(sel.template).content.cloneNode(true);  
-    //const transaction = this._html.querySelector(sel.transaction);
+    const transaction = this._html.querySelector(sel.transaction);
     switch(this._actionKind) {
       case ACTION_KIND.FUNCTION_CALL:
       break;
       case ACTION_KIND.TRANSFER:
-        /*if(this._actionDirection === ACTION_DIRECTION.IN) {
-
+        if(this._actionDirection === ACTION_DIRECTION.IN) {
+          transaction.setAttribute('data-filter', sel.filter.nearTransferIn());
         }
         else if(this._actionDirection === ACTION_DIRECTION.OUT) {
-
-        }*/
+          transaction.setAttribute('data-filter', sel.filter.nearTransferOut());
+        }
       break;
       case ACTION_KIND.ADD_KEY:
+        transaction.setAttribute('data-filter', sel.filter.accessKeysAdd());
       break;
       case ACTION_KIND.DELETE_KEY:
+        transaction.setAttribute('data-filter', sel.filter.accessKeysDelete());
       break;
       case ACTION_KIND.DEPLOY_CONTRACT:
       break;

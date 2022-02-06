@@ -13,6 +13,7 @@ import FunctionCallUpdater from '../src/FunctionCallUpdater.js';
 
 import EntranceForm from '../src/view/EntranceForm.js';
 import ProgressBar from '../src/view/ProgressBar.js';
+import Filter from '../src/view/Filter.js';
 import TransactionsList from '../src/view/TransactionsList.js';
 import Transaction from '../src/view/Transaction.js';
 
@@ -34,6 +35,10 @@ const progressBar = new ProgressBar({
   loaderHidden: 'progress-bar__loader_hidden',
 });
 
+const filter = new Filter({
+  filter: '.filter',
+});
+
 
 const transactionsList = new TransactionsList('.transactions__list');
 const contractApi = new ContractApi(); // should be global because of caching inside
@@ -49,11 +54,13 @@ entranceForm.addSubmitListener(async function (e) {
   if(transactions.length > 0) {
     transactionsList.clear();
     progressBar.reset(transactions.length);
+    filter.clear();
     
     transactions.forEach((item) => {
       const trxBaseData = getTransactionBaseData(item, account);
       const trx = new Transaction(trxBaseData);
       let trxElement = trx.createHtmlElement({
+        filter,
         // selectors
         template: '.transaction-template',
         transaction: '.transaction',
@@ -96,6 +103,7 @@ entranceForm.addSubmitListener(async function (e) {
     }
 
     progressBar.finish();
+    filter.render();
     
   } else {
     transactionsList.renderEmptyResult();
