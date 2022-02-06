@@ -20,6 +20,7 @@ import Transaction from '../src/view/Transaction.js';
 const entranceForm = new EntranceForm({
   form: '.entrance__form',
   account: '.entrance__input_type_account',
+  limit: '.entrance__input_type_limit',
   button: '.entrance__button'
 });
 
@@ -42,7 +43,7 @@ entranceForm.addSubmitListener(async function (e) {
   const account = entranceForm.getAccountName();
   entranceForm.disableInput();
 
-  const transactions = await getSourceTransactions(account, 100);
+  const transactions = await getSourceTransactions(account, entranceForm.getLimit());
   const functionCallUpdaterQueue = [];
 
   if(transactions.length > 0) {

@@ -2,6 +2,7 @@ export default class EntranceForm {
   constructor(selectors) {
     this._form = document.querySelector(selectors.form);
     this._account = this._form.querySelector(selectors.account);
+    this._limit = this._form.querySelector(selectors.limit);
     this._button = this._form.querySelector(selectors.button);
   }
 
@@ -11,6 +12,10 @@ export default class EntranceForm {
 
   getAccountName() {
     return this._account.value;
+  }
+
+  getLimit() {
+    return parseInt(this._limit.value) > 1 ? parseInt(this._limit.value) : 1;
   }
 
   disableInput = () => {
