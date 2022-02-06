@@ -26,6 +26,7 @@
 @import url("../blocks/transactions/transactions.css");
 @import url("../blocks/transactions/__list/transactions__list.css");
 @import url("../blocks/transaction/transaction.css");
+@import url("../blocks/transaction/_hidden/transaction_hidden.css");
 @import url("../blocks/transaction/__icon/transaction__icon.css");
 @import url("../blocks/transaction/__body/transaction__body.css");
 @import url("../blocks/transaction/__icon-picture/transaction__icon-picture.css");
