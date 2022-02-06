@@ -1,0 +1,6 @@
+.filter__section-list {
+  list-style-type: none;
+  padding-left: 0;
+  display: grid;
+  row-gap: 4px;
+}

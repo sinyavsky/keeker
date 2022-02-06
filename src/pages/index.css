@@ -23,6 +23,16 @@
 @import url("../blocks/progress-bar/__loader/progress-bar__loader.css");
 @import url("../blocks/progress-bar/__loader/_hidden/progress-bar__loader_hidden.css");
 
+@import url("../blocks/filter/filter.css");
+@import url("../blocks/filter/_visible/filter_visible.css");
+@import url("../blocks/filter/__heading/filter__heading.css");
+@import url("../blocks/filter/__list/filter__list.css");
+@import url("../blocks/filter/__item/filter__item.css");
+@import url("../blocks/filter/__section-heading/filter__section-heading.css");
+@import url("../blocks/filter/__section-list/filter__section-list.css");
+@import url("../blocks/filter/__label/filter__label.css");
+@import url("../blocks/filter/__checkbox/filter__checkbox.css");
+
 @import url("../blocks/transactions/transactions.css");
 @import url("../blocks/transactions/__list/transactions__list.css");
 @import url("../blocks/transaction/transaction.css");
