@@ -18,6 +18,14 @@ export default class Filter {
           delete: { name: 'Delete', count: 0 },
         },
       },
+      staking: {
+        name: 'Staking',
+        items: {
+          stake: { name: 'Stake', count: 0 },
+          unstake: { name: 'Unstake', count: 0 },
+          withdraw: { name: 'Withdraw', count: 0 },
+        },
+      },
       contractDeploy: {
         name: 'Contract deploying',
         items: {
@@ -108,6 +116,21 @@ export default class Filter {
   contractDeploy() {
     this._data.contractDeploy.items.deploy.count ++;
     return this._generateData('contractDeploy', 'deploy');
+  }
+
+  stakingStake() {
+    this._data.staking.items.stake.count ++;
+    return this._generateData('staking', 'stake');
+  }
+
+  stakingUnstake() {
+    this._data.staking.items.unstake.count ++;
+    return this._generateData('staking', 'unstake');
+  }
+
+  stakingWithdraw() {
+    this._data.staking.items.withdraw.count ++;
+    return this._generateData('staking', 'withdraw');
   }
 
   

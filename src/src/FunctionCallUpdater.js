@@ -9,6 +9,7 @@ import parseContractInterface from './parser/parseContractInterface.js';
 
 export default class FunctionCallUpdater {  
   constructor(data) {
+    this._trxElement = data.trxElement;
     this._headingElement = data.headingElement;
     this._iconElement = data.iconElement;
     this._currentAccount = data.currentAccount;
@@ -16,9 +17,12 @@ export default class FunctionCallUpdater {
     this._validatorsList = data.validatorsList;
     this._trxParser = new TransactionParser(data.trx);
 
+    this._filter = data.filter;
+
     this._heading = '';
     this._iconSrc = '';
     this._iconAlt = '';
+    this._filterData = '';
   }
 
   _prepareIcon(src, alt) {
@@ -47,20 +51,24 @@ export default class FunctionCallUpdater {
       this._prepareIcon(iconNear, 'NEAR');
       if(this._trxParser.getFunctionCallMethod() === 'deposit_and_stake') {
         const nearAmount = formatNearAmount(this._trxParser.getValidatorDepositAndStakeAmount());
-        this._heading = `Deposit and stake ${nearAmount} NEAR to the validator ${this._trxParser.getFunctionCallReceiver()}`;        
+        this._heading = `Deposit and stake ${nearAmount} NEAR to the validator ${this._trxParser.getFunctionCallReceiver()}`;
+        this._filterData = this._filter.stakingStake();
         return true;
       }
       else if(this._trxParser.getFunctionCallMethod() === 'unstake') {
         const nearAmount = formatNearAmount(this._trxParser.getValidatorUnstakeAmount());
-        this._heading = `Unstake ${nearAmount} NEAR from the validator ${this._trxParser.getFunctionCallReceiver()}`;        
+        this._heading = `Unstake ${nearAmount} NEAR from the validator ${this._trxParser.getFunctionCallReceiver()}`; 
+        this._filterData = this._filter.stakingUnstake();       
         return true;
       }
       else if(this._trxParser.getFunctionCallMethod() === 'withdraw_all') {
-        this._heading = `Widthdraw all available NEAR from the validator ${this._trxParser.getFunctionCallReceiver()}`;        
+        this._heading = `Widthdraw all available NEAR from the validator ${this._trxParser.getFunctionCallReceiver()}`;
+        this._filterData = this._filter.stakingWithdraw();     
         return true;
       }
       else if(this._trxParser.getFunctionCallMethod() === 'unstake_all') {
-        this._heading = `Unstake all available NEAR from the validator ${this._trxParser.getFunctionCallReceiver()}`;        
+        this._heading = `Unstake all available NEAR from the validator ${this._trxParser.getFunctionCallReceiver()}`;
+        this._filterData = this._filter.stakingUnstake();     
         return true;
       }
     }
@@ -195,6 +203,10 @@ export default class FunctionCallUpdater {
 
     if(this._iconSrc.length < 1) {
       this._prepareIcon(iconFunctionCall, 'Function Call');
+    }
+
+    if(this._filterData.length > 0) {
+      this._trxElement.setAttribute('data-filter', this._filterData);
     }
 
     this._headingElement.innerHTML = this._heading;

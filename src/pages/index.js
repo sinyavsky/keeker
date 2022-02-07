@@ -79,9 +79,11 @@ entranceForm.addSubmitListener(async function (e) {
       if(trx.isFunctionCall()) {
         trxElement = document.querySelector('.transactions__list .transaction:last-child'); // weird, I should refactor it
         functionCallUpdaterQueue.push({
+          trxElement,
           headingElement: trxElement.querySelector('.transaction__heading'),
           iconElement: trxElement.querySelector('.transaction__icon'),
           trx: item,
+          filter,
         });
       }
       else {
