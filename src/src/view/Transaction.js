@@ -1,4 +1,4 @@
-import { ACTION_KIND, ACTION_DIRECTION } from '../utils/constants.js';
+import { ACTION_KIND/*, ACTION_DIRECTION*/ } from '../utils/constants.js';
 import { formatDateFromNanoseconds } from '../utils/format.js';
 import { prettyPrintJson } from 'pretty-print-json';
 
@@ -13,6 +13,7 @@ export default class Transaction {
     this._blockHash = data.blockHash;    
     this._blockTimestamp = data.blockTimestamp;
     this._source = data.source;
+    this._filterData = data.filterData;
   }
 
   isFunctionCall() {
@@ -22,26 +23,16 @@ export default class Transaction {
   createHtmlElement = (sel) => {
     this._html = document.querySelector(sel.template).content.cloneNode(true);  
     const transaction = this._html.querySelector(sel.transaction);
-    let dataFilter = '';
     switch(this._actionKind) {
       case ACTION_KIND.FUNCTION_CALL:
       break;
       case ACTION_KIND.TRANSFER:
-        if(this._actionDirection === ACTION_DIRECTION.IN) {
-          dataFilter = sel.filter.nearTransferIn();
-        }
-        else if(this._actionDirection === ACTION_DIRECTION.OUT) {
-          dataFilter = sel.filter.nearTransferOut();
-        }
       break;
       case ACTION_KIND.ADD_KEY:
-        dataFilter = sel.filter.accessKeysAdd();
       break;
       case ACTION_KIND.DELETE_KEY:
-        dataFilter = sel.filter.accessKeysDelete();
       break;
       case ACTION_KIND.DEPLOY_CONTRACT:
-        dataFilter = sel.filter.contractDeploy();
       break;
       case ACTION_KIND.STAKE:
       break;
@@ -51,8 +42,8 @@ export default class Transaction {
       break;      
     }
 
-    if(dataFilter.length > 0) {
-      transaction.setAttribute('data-filter', dataFilter);
+    if(this._filterData.length > 0) {
+      transaction.setAttribute('data-filter', this._filterData);
     }
 
     const heading = this._html.querySelector(sel.heading);

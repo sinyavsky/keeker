@@ -8,7 +8,7 @@ import iconStake from '../images/stake.svg';
 import iconCreateAccount from '../images/create-account.svg';
 import iconDeleteAccount from '../images/delete-account.svg';
 
-export default function getTransactionBaseData(trx, currentAccount) {
+export default function getTransactionBaseData(trx, currentAccount, filter) {
 
   const parser = new TransactionParser(trx);
 
@@ -17,7 +17,8 @@ export default function getTransactionBaseData(trx, currentAccount) {
     hash: parser.getHash(),
     blockHash: parser.getBlockHash(),
     blockTimestamp: parser.getBlockTimestamp(),
-    source: trx
+    source: trx,
+    filterData: '',
   };
 
   switch(res.actionKind) {
@@ -30,12 +31,14 @@ export default function getTransactionBaseData(trx, currentAccount) {
         res.heading = `Send ${nearAmount} NEAR to ${parser.getNearReceiverId()}`;
         res.actionDirection = ACTION_DIRECTION.OUT;
         res.iconSrc = iconNear;
+        res.filterData = filter.nearTransferOut();
       }
       else {// receiver === currentAccount
         const nearAmount = formatNearAmount(parser.getNearAmount());
         res.heading = `Receive ${nearAmount} NEAR from ${parser.getSignerId()}`;
         res.actionDirection = ACTION_DIRECTION.IN;
         res.iconSrc = iconNear;
+        res.filterData = filter.nearTransferIn();
       }
     break;
     case ACTION_KIND.ADD_KEY: { // todo: check is heading relevant
@@ -45,14 +48,17 @@ export default function getTransactionBaseData(trx, currentAccount) {
         res.heading += ` for ${keyReceiver}`;
       }
       res.iconSrc = iconKey;
+      res.filterData = filter.accessKeysAdd();
     } break;
     case ACTION_KIND.DELETE_KEY: // todo: check is heading relevant
       res.heading = `Delete key ${parser.getDeletedPublicKey()}`;
       res.iconSrc = iconKey;
+      res.filterData = filter.accessKeysDelete();
     break;
     case ACTION_KIND.DEPLOY_CONTRACT: // todo: check is heading relevant
       res.heading = 'Deploy contract';
       res.iconSrc = iconContract;
+      res.filterData = filter.contractDeploy();
     break;
     case ACTION_KIND.STAKE: // todo: check is heading relevant
       res.heading = 'Stake';

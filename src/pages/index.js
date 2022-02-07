@@ -57,10 +57,9 @@ entranceForm.addSubmitListener(async function (e) {
     filter.clear();
     
     transactions.forEach((item) => {
-      const trxBaseData = getTransactionBaseData(item, account);
+      const trxBaseData = getTransactionBaseData(item, account, filter);
       const trx = new Transaction(trxBaseData);
       let trxElement = trx.createHtmlElement({
-        filter,
         // selectors
         template: '.transaction-template',
         transaction: '.transaction',
