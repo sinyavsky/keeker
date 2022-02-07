@@ -22,24 +22,26 @@ export default class Transaction {
   createHtmlElement = (sel) => {
     this._html = document.querySelector(sel.template).content.cloneNode(true);  
     const transaction = this._html.querySelector(sel.transaction);
+    let dataFilter = '';
     switch(this._actionKind) {
       case ACTION_KIND.FUNCTION_CALL:
       break;
       case ACTION_KIND.TRANSFER:
         if(this._actionDirection === ACTION_DIRECTION.IN) {
-          transaction.setAttribute('data-filter', sel.filter.nearTransferIn());
+          dataFilter = sel.filter.nearTransferIn();
         }
         else if(this._actionDirection === ACTION_DIRECTION.OUT) {
-          transaction.setAttribute('data-filter', sel.filter.nearTransferOut());
+          dataFilter = sel.filter.nearTransferOut();
         }
       break;
       case ACTION_KIND.ADD_KEY:
-        transaction.setAttribute('data-filter', sel.filter.accessKeysAdd());
+        dataFilter = sel.filter.accessKeysAdd();
       break;
       case ACTION_KIND.DELETE_KEY:
-        transaction.setAttribute('data-filter', sel.filter.accessKeysDelete());
+        dataFilter = sel.filter.accessKeysDelete();
       break;
       case ACTION_KIND.DEPLOY_CONTRACT:
+        dataFilter = sel.filter.contractDeploy();
       break;
       case ACTION_KIND.STAKE:
       break;
@@ -47,6 +49,10 @@ export default class Transaction {
       break;
       case ACTION_KIND.DELETE_ACCOUNT:
       break;      
+    }
+
+    if(dataFilter.length > 0) {
+      transaction.setAttribute('data-filter', dataFilter);
     }
 
     const heading = this._html.querySelector(sel.heading);

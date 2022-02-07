@@ -18,6 +18,12 @@ export default class Filter {
           delete: { name: 'Delete', count: 0 },
         },
       },
+      contractDeploy: {
+        name: 'Contract deploying',
+        items: {
+          deploy: { name: 'Deploy contract', count: 0 },
+        },
+      },
     };
   }
 
@@ -98,4 +104,11 @@ export default class Filter {
     this._data.accessKeys.items.delete.count ++;
     return this._generateData('accessKeys', 'delete');
   }
+
+  contractDeploy() {
+    this._data.contractDeploy.items.deploy.count ++;
+    return this._generateData('contractDeploy', 'deploy');
+  }
+
+  
 }
