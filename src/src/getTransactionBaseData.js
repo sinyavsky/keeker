@@ -61,10 +61,12 @@ export default function getTransactionBaseData(trx, currentAccount, filter) {
     case ACTION_KIND.STAKE: // todo: check is heading relevant
       res.heading = 'Stake';
       res.iconSrc = iconStake;
+      res.filterData = filter.addItem(FILTER_SECTION.STAKING, FILTER_ELEMENT.STAKING_STAKE);
     break;
     case ACTION_KIND.CREATE_ACCOUNT: // todo: check is heading relevant
       res.heading = `Create account ${parser.getCreatedAccount()}`;
       res.iconSrc = iconCreateAccount;
+      res.filterData = filter.addItem(FILTER_SECTION.ACCOUNTS, FILTER_ELEMENT.ACCOUNTS_CREATE);
     break;
     case ACTION_KIND.DELETE_ACCOUNT: { // todo: check is heading relevant
       res.heading = `Delete account ${parser.getDeletedAccount()}`;
@@ -73,6 +75,7 @@ export default function getTransactionBaseData(trx, currentAccount, filter) {
         res.heading += ` and transfer remaining funds to beneficiary account: ${beneficiary}`;
       }
       res.iconSrc = iconDeleteAccount;
+      res.filterData = filter.addItem(FILTER_SECTION.ACCOUNTS, FILTER_ELEMENT.ACCOUNTS_DELETE);
     } break;
     default: // todo: add icon and probably make a log
       res.heading = 'Unknown action';

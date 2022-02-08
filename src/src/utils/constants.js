@@ -32,6 +32,7 @@ export const FILTER_SECTION = {
   NEAR_TRANSFER: 'Near transfers',
   ACCESS_KEYS: 'Access keys',
   STAKING: 'Staking',
+  ACCOUNTS: 'Accounts',
   CONTRACT_DEPLOY: 'Contract deploying',
 };
 
@@ -44,4 +45,6 @@ export const FILTER_ELEMENT = {
   STAKING_UNSTAKE: 'Unstake',
   STAKING_WITHDRAW: 'Withdraw',
   CONTRACT_DEPLOY_DEPLOY: 'Deploy contract',
+  ACCOUNTS_CREATE: 'Create',
+  ACCOUNTS_DELETE: 'Delete',
 };
