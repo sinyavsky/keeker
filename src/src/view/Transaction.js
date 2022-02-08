@@ -42,7 +42,7 @@ export default class Transaction {
     }
 
     if(this._filterData.length > 0) {
-      transaction.setAttribute('data-filter', this._filterData);
+      transaction.setAttribute(sel.attrFilter, this._filterData);
     }
 
     const heading = this._html.querySelector(sel.heading);

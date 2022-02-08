@@ -83,6 +83,8 @@ entranceForm.addSubmitListener(async function (e) {
         // classes
         iconPicClass: 'transaction__icon-picture',
         sourceVisibleClass: 'transaction__source_visible',
+        // attributes
+        attrFilter: 'data-filter',
       });
       
       transactionsList.renderTransaction(trxElement);
