@@ -32,3 +32,21 @@ export const CONTRACT_INTERFACE = {
   FUNGIBLE_TOKEN: 'FUNGIBLE_TOKEN',
   UNKNOWN: 'UNKNOWN'
 };
+
+export const FILTER_SECTION = {
+  NEAR_TRANSFER: 'Near transfers',
+  ACCESS_KEYS: 'Access keys',
+  STAKING: 'Staking',
+  CONTRACT_DEPLOY: 'Contract deploying',
+};
+
+export const FILTER_ELEMENT = {
+  NEAR_TRANSFER_IN: 'In',
+  NEAR_TRANSFER_OUT: 'Out',
+  ACCESS_KEYS_ADD: 'Add',
+  ACCESS_KEYS_DELETE: 'Delete',
+  STAKING_STAKE: 'Stake',
+  STAKING_UNSTAKE: 'Unstake',
+  STAKING_WITHDRAW: 'Withdraw',
+  CONTRACT_DEPLOY_DEPLOY: 'Deploy contract',
+};

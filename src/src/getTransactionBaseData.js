@@ -1,4 +1,4 @@
-import { ACTION_KIND, ACTION_DIRECTION } from './utils/constants.js';
+import { ACTION_KIND, ACTION_DIRECTION, FILTER_SECTION, FILTER_ELEMENT } from './utils/constants.js';
 import TransactionParser from './parser/TransactionParser.js';
 import { formatNearAmount } from "./utils/format.js";
 import iconNear from '../images/near.svg';
@@ -31,14 +31,14 @@ export default function getTransactionBaseData(trx, currentAccount, filter) {
         res.heading = `Send ${nearAmount} NEAR to ${parser.getNearReceiverId()}`;
         res.actionDirection = ACTION_DIRECTION.OUT;
         res.iconSrc = iconNear;
-        res.filterData = filter.nearTransferOut();
+        res.filterData = filter.addItem(FILTER_SECTION.NEAR_TRANSFER, FILTER_ELEMENT.NEAR_TRANSFER_OUT);
       }
       else {// receiver === currentAccount
         const nearAmount = formatNearAmount(parser.getNearAmount());
         res.heading = `Receive ${nearAmount} NEAR from ${parser.getSignerId()}`;
         res.actionDirection = ACTION_DIRECTION.IN;
         res.iconSrc = iconNear;
-        res.filterData = filter.nearTransferIn();
+        res.filterData = filter.addItem(FILTER_SECTION.NEAR_TRANSFER, FILTER_ELEMENT.NEAR_TRANSFER_IN);
       }
     break;
     case ACTION_KIND.ADD_KEY: { // todo: check is heading relevant
@@ -48,17 +48,17 @@ export default function getTransactionBaseData(trx, currentAccount, filter) {
         res.heading += ` for ${keyReceiver}`;
       }
       res.iconSrc = iconKey;
-      res.filterData = filter.accessKeysAdd();
+      res.filterData = filter.addItem(FILTER_SECTION.ACCESS_KEYS, FILTER_ELEMENT.ACCESS_KEYS_ADD);
     } break;
     case ACTION_KIND.DELETE_KEY: // todo: check is heading relevant
       res.heading = `Delete key ${parser.getDeletedPublicKey()}`;
       res.iconSrc = iconKey;
-      res.filterData = filter.accessKeysDelete();
+      res.filterData = filter.addItem(FILTER_SECTION.ACCESS_KEYS, FILTER_ELEMENT.ACCESS_KEYS_DELETE);
     break;
     case ACTION_KIND.DEPLOY_CONTRACT: // todo: check is heading relevant
       res.heading = 'Deploy contract';
       res.iconSrc = iconContract;
-      res.filterData = filter.contractDeploy();
+      res.filterData = filter.addItem(FILTER_SECTION.CONTRACT_DEPLOY, FILTER_ELEMENT.CONTRACT_DEPLOY_DEPLOY);
     break;
     case ACTION_KIND.STAKE: // todo: check is heading relevant
       res.heading = 'Stake';

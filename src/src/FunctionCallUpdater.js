@@ -1,4 +1,4 @@
-import { CONTRACT_INTERFACE } from './utils/constants.js';
+import { CONTRACT_INTERFACE, FILTER_SECTION, FILTER_ELEMENT } from './utils/constants.js';
 import { formatNearAmount, formatTokenAmount } from './utils/format.js';
 import iconFunctionCall from '../images/function-call.svg';
 import iconNear from '../images/near.svg';
@@ -7,7 +7,7 @@ import iconBocaChica from '../images/boca-chica.png';
 import TransactionParser from './parser/TransactionParser.js';
 import parseContractInterface from './parser/parseContractInterface.js';
 
-export default class FunctionCallUpdater {  
+export default class FunctionCallUpdater {
   constructor(data) {
     this._trxElement = data.trxElement;
     this._headingElement = data.headingElement;
@@ -52,23 +52,23 @@ export default class FunctionCallUpdater {
       if(this._trxParser.getFunctionCallMethod() === 'deposit_and_stake') {
         const nearAmount = formatNearAmount(this._trxParser.getValidatorDepositAndStakeAmount());
         this._heading = `Deposit and stake ${nearAmount} NEAR to the validator ${this._trxParser.getFunctionCallReceiver()}`;
-        this._filterData = this._filter.stakingStake();
+        this._filterData = this._filter.addItem(FILTER_SECTION.STAKING, FILTER_ELEMENT.STAKING_STAKE);
         return true;
       }
       else if(this._trxParser.getFunctionCallMethod() === 'unstake') {
         const nearAmount = formatNearAmount(this._trxParser.getValidatorUnstakeAmount());
         this._heading = `Unstake ${nearAmount} NEAR from the validator ${this._trxParser.getFunctionCallReceiver()}`; 
-        this._filterData = this._filter.stakingUnstake();       
+        this._filterData = this._filter.addItem(FILTER_SECTION.STAKING, FILTER_ELEMENT.STAKING_UNSTAKE);     
         return true;
       }
       else if(this._trxParser.getFunctionCallMethod() === 'withdraw_all') {
         this._heading = `Widthdraw all available NEAR from the validator ${this._trxParser.getFunctionCallReceiver()}`;
-        this._filterData = this._filter.stakingWithdraw();     
+        this._filterData = this._filter.addItem(FILTER_SECTION.STAKING, FILTER_ELEMENT.STAKING_WITHDRAW);    
         return true;
       }
       else if(this._trxParser.getFunctionCallMethod() === 'unstake_all') {
         this._heading = `Unstake all available NEAR from the validator ${this._trxParser.getFunctionCallReceiver()}`;
-        this._filterData = this._filter.stakingUnstake();     
+        this._filterData = this._filter.addItem(FILTER_SECTION.STAKING, FILTER_ELEMENT.STAKING_UNSTAKE);    
         return true;
       }
     }
