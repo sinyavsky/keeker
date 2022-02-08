@@ -2,7 +2,22 @@ import { FILTER_SECTION } from "../utils/constants";
 
 export default class Filter {
   constructor(cfg) {
-    this._filter = document.querySelector(cfg.filter);
+    this._filter = document.querySelector(cfg.selFilter);    
+    this._filterList = document.querySelector(cfg.selFilterList);
+    this._filterItemTemplate = document.querySelector(cfg.selFilterItemTemplate);
+    this._filterSectionItemTemplate = document.querySelector(cfg.selFilterSectionItemTemplate);
+
+    this._selFilterSectionHeading = cfg.selFilterSectionHeading;
+    this._selFilterSectionList = cfg.selFilterSectionList;
+    this._selFilterLabel = cfg.selFilterLabel;
+    this._selFilterCheckbox = cfg.selFilterCheckbox;
+    this._selTransaction = cfg.selTransaction;
+
+    this._classFilterVisible = cfg.classFilterVisible;
+    this._classTransactionHidden = cfg.classTransactionHidden;
+
+    this._attrFilter = cfg.attrFilter;
+
     this._data = {};
     Object.values(FILTER_SECTION).forEach((section) => {
       this._data[section] = {
@@ -12,6 +27,14 @@ export default class Filter {
     });
   }
 
+  _hideFilter() {
+    this._filter.classList.remove(this._classFilterVisible);
+  }
+
+  _showFilter() {
+    this._filter.classList.add(this._classFilterVisible);
+  }
+
   clear = () => {
     Object.values(this._data).forEach((section) => {
       Object.values(section.items).forEach((item) => {
@@ -19,8 +42,8 @@ export default class Filter {
       });
     });
 
-    this._filter.classList.remove('filter_visible');
-    this._filter.querySelector('.filter__list').textContent = '';
+    this._hideFilter();
+    this._filterList.textContent = '';
   };
   
   _generateData = (section, item) => {
@@ -28,32 +51,32 @@ export default class Filter {
   };
 
   render = () => {
-    this._filter.classList.add('filter_visible');
+    this._showFilter();
     Object.entries(this._data).forEach((sectionEntry) => {
       const [sectionKey, section] = sectionEntry;
       let hasElements = false;
-      const sectionItem = document.querySelector('.filter-item-template').content.cloneNode(true);
-      const sectionList = sectionItem.querySelector('.filter__section-list');
+      const sectionItem = this._filterItemTemplate.content.cloneNode(true);
+      const sectionList = sectionItem.querySelector(this._selFilterSectionList);
       Object.entries(section.items).forEach((itemEntry) => {
         const [itemKey, item] = itemEntry;
         if(item.count > 0) {
           hasElements = true;
-          const elementItem = document.querySelector('.filter-section-item-template').content.cloneNode(true);
-          elementItem.querySelector('.filter__label').insertAdjacentText('beforeend', `${item.name} (${item.count})`);
+          const elementItem = this._filterSectionItemTemplate.content.cloneNode(true);
+          elementItem.querySelector(this._selFilterLabel).insertAdjacentText('beforeend', `${item.name} (${item.count})`);
           const filterString = this._generateData(sectionKey, itemKey);
-          const filterCheckbox = elementItem.querySelector('.filter__checkbox');
-          filterCheckbox.setAttribute('data-filter', this._generateData(sectionKey, filterString));
+          const filterCheckbox = elementItem.querySelector(this._selFilterCheckbox);
+          filterCheckbox.setAttribute(this._attrFilter, this._generateData(sectionKey, filterString));
           filterCheckbox.addEventListener('change', (event) => {
-            const transactions = document.querySelectorAll(`.transaction[data-filter='${filterString}']`);
+            const transactions = document.querySelectorAll(`${this._selTransaction}[${this._attrFilter}='${filterString}']`);
             if(transactions.length > 0) {
               if(event.currentTarget.checked) {
                 transactions.forEach((trx) => {
-                  trx.classList.remove('transaction_hidden');
+                  trx.classList.remove(this._classTransactionHidden);
                 });
               }
               else {
                 transactions.forEach((trx) => {
-                  trx.classList.add('transaction_hidden');
+                  trx.classList.add(this._classTransactionHidden);
                 });
               }
             }
@@ -63,9 +86,8 @@ export default class Filter {
         }
       });
       if(hasElements) {
-        sectionItem.querySelector('.filter__section-heading').textContent = section.name;
-        const filterList = this._filter.querySelector('.filter__list');        
-        filterList.append(sectionItem);
+        sectionItem.querySelector(this._selFilterSectionHeading).textContent = section.name;       
+        this._filterList.append(sectionItem);
       }
     });
   };

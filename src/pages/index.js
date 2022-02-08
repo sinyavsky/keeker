@@ -36,7 +36,18 @@ const progressBar = new ProgressBar({
 });
 
 const filter = new Filter({
-  filter: '.filter',
+  selFilter: '.filter',
+  selFilterList: '.filter__list',
+  selFilterItemTemplate: '.filter-item-template',
+  selFilterSectionItemTemplate: '.filter-section-item-template',
+  selFilterSectionHeading: '.filter__section-heading',
+  selFilterSectionList: '.filter__section-list',
+  selFilterLabel: '.filter__label',
+  selFilterCheckbox: '.filter__checkbox',
+  selTransaction: '.transaction',
+  classFilterVisible: 'filter_visible',
+  classTransactionHidden: 'transaction_hidden',
+  attrFilter: 'data-filter',
 });
 
 
