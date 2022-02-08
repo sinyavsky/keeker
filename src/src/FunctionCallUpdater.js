@@ -37,6 +37,7 @@ export default class FunctionCallUpdater {
       const nearAmount = formatNearAmount(this._trxParser.getFtTransferAmount());
       this._heading = `Wrap ${nearAmount} NEAR and send it to Aurora address 0x${this._trxParser.getFtTransferCallMessage()}`;
       this._prepareIcon(iconAurora, 'Aurora');
+      this._filterData = this._filter.addItem(FILTER_SECTION.WNEAR_TRANSACTIONS, FILTER_ELEMENT.WNEAR_TRANSACTIONS_TO_AURORA);
       return true;
     }
     return false;
@@ -80,12 +81,14 @@ export default class FunctionCallUpdater {
       this._prepareIcon(iconNear, 'Near');
       const createdAccount = this._trxParser.getNearCreatedAccount();
       if(this._trxParser.getFunctionCallMethod() === 'create_account') {
-        this._heading = `Create account ${createdAccount.name} and deposit ${formatNearAmount(createdAccount.deposit)} NEAR into it`;     
+        this._heading = `Create account ${createdAccount.name} and deposit ${formatNearAmount(createdAccount.deposit)} NEAR into it`;
+        this._filterData = this._filter.addItem(FILTER_SECTION.ACCOUNTS, FILTER_ELEMENT.ACCOUNTS_CREATE);    
         return true;
       }
     }
     else if(this._trxParser.getFunctionCallReceiver() === 'launchpad.bocachica_mars.near') {
       this._prepareIcon(iconBocaChica,'Boca Chica Launchpad');
+      this._filterData = this._filter.addItem(FILTER_SECTION.OTHER, 'Boca Chica launchpad');
       if(this._trxParser.getFunctionCallMethod() === 'claim_refund') {
         this._heading = `Claim refund from Boca Chica launchpad sale #${this._trxParser.getBocaChicaSaleId()}`; // todo: sale name and description        
         return true;
@@ -108,13 +111,27 @@ export default class FunctionCallUpdater {
     }
 
     const tokenName = metadata.symbol === metadata.name ? metadata.symbol : `${metadata.symbol} (${metadata.name})`;
-    if(this._trxParser.getFunctionCallMethod() === "ft_transfer_call" || this._trxParser.getFunctionCallMethod() === "ft_transfer") {      
+    if(this._trxParser.getFunctionCallMethod() === "ft_transfer_call" || this._trxParser.getFunctionCallMethod() === "ft_transfer") {     
       const tokenAmount = formatTokenAmount(this._trxParser.getFtTransferAmount(), metadata.decimals);
       if(this._trxParser.getSignerId() === this._currentAccount) {
         this._heading = `Send ${tokenAmount} ${tokenName} to ${this._trxParser.getFtTransferReceiver()}`;
+
+        if(this._trxParser.getFunctionCallReceiver() === 'wrap.near') {// todo: refactor
+          this._filterData = this._filter.addItem(FILTER_SECTION.WNEAR_TRANSACTIONS, FILTER_ELEMENT.WNEAR_TRANSACTIONS_SEND);
+        }
+        else {
+          this._filterData = this._filter.addItem(FILTER_SECTION.FUNGIBLE_TOKENS, tokenName);
+        }
         return;
       }
       this._heading = `Receive ${tokenAmount} ${tokenName} from ${this._trxParser.getFtTransferReceiver()}`;
+
+      if(this._trxParser.getFunctionCallReceiver() === 'wrap.near') {// todo: refactor
+        this._filterData = this._filter.addItem(FILTER_SECTION.WNEAR_TRANSACTIONS, FILTER_ELEMENT.WNEAR_TRANSACTIONS_RECEIVE);
+      }
+      else {
+        this._filterData = this._filter.addItem(FILTER_SECTION.FUNGIBLE_TOKENS, tokenName);
+      }
       return;
     }
     else if(this._trxParser.getFunctionCallMethod() === "storage_deposit") {
@@ -123,6 +140,7 @@ export default class FunctionCallUpdater {
       if(this._trxParser.getStorageDepositReceiver() != this._currentAccount) {
         this._heading += ` for account ${this._trxParser.getStorageDepositReceiver()}`;
       }
+      this._filterData = this._filter.addItem(FILTER_SECTION.NEAR_TRANSFER, FILTER_ELEMENT.NEAR_TRANSFER_STORAGE);
       return;
     }
 
@@ -135,18 +153,27 @@ export default class FunctionCallUpdater {
     else if(this._trxParser.getFunctionCallReceiver() === 'wrap.near') {
       if(this._trxParser.getFunctionCallMethod() === "near_deposit") {
         const tokenAmount = formatNearAmount(this._trxParser.getWrapNearDepositAmount());
-        this._heading = `Wrap ${tokenAmount} NEAR using wrap.near contract`;        
+        this._heading = `Wrap ${tokenAmount} NEAR using wrap.near contract`;
+        this._filterData = this._filter.addItem(FILTER_SECTION.WNEAR_TRANSACTIONS, FILTER_ELEMENT.WNEAR_TRANSACTIONS_WRAP);     
         return;
       }
       else if(this._trxParser.getFunctionCallMethod() === "near_withdraw") {
         const tokenAmount = formatNearAmount(this._trxParser.getWrapNearWidthdrawAmount());
-        this._heading = `Unwrap ${tokenAmount} NEAR using wrap.near contract`;        
+        this._heading = `Unwrap ${tokenAmount} NEAR using wrap.near contract`;     
+        this._filterData = this._filter.addItem(FILTER_SECTION.WNEAR_TRANSACTIONS, FILTER_ELEMENT.WNEAR_TRANSACTIONS_UNWRAP);
         return;
       }
     }
 
 
     this._heading = `Call function ${this._trxParser.getFunctionCallMethod()} from Fungible token contract ${this._trxParser.getFunctionCallReceiver()}`;
+
+    if(this._trxParser.getFunctionCallReceiver() === 'wrap.near') {// todo: refactor
+      this._filterData = this._filter.addItem(FILTER_SECTION.WNEAR_TRANSACTIONS, FILTER_ELEMENT.WNEAR_TRANSACTIONS_OTHER);
+    }
+    else {
+      this._filterData = this._filter.addItem(FILTER_SECTION.FUNGIBLE_TOKENS, tokenName);
+    }
   }
 
   _prepareNftHeading(metadata) {
@@ -155,6 +182,7 @@ export default class FunctionCallUpdater {
     }
 
     const tokenName = metadata.symbol === metadata.name ? metadata.symbol : `${metadata.symbol} (${metadata.name})`;
+    this._filterData = this._filter.addItem(FILTER_SECTION.NFT, tokenName);
     if(this._trxParser.getFunctionCallReceiver() === 'near-punks.near') {
       if(this._trxParser.getFunctionCallMethod() === "master_mint") {
         const mintData = this._trxParser.getNearPunksMasterMint();
@@ -205,9 +233,12 @@ export default class FunctionCallUpdater {
       this._prepareIcon(iconFunctionCall, 'Function Call');
     }
 
-    if(this._filterData.length > 0) {
-      this._trxElement.setAttribute('data-filter', this._filterData);
+    if(this._filterData.length < 1) {
+      this._filterData = this._filter.addItem(FILTER_SECTION.OTHER, FILTER_ELEMENT.OTHER_FUNCTION_CALL);      
     }
+    
+    this._trxElement.setAttribute('data-filter', this._filterData);
+
 
     this._headingElement.innerHTML = this._heading;
     this._iconElement.innerHTML = `<img src="${this._iconSrc}" alt="${this.__iconAlt}" class="transaction__icon-picture">`;

@@ -34,11 +34,16 @@ export const FILTER_SECTION = {
   STAKING: 'Staking',
   ACCOUNTS: 'Accounts',
   CONTRACT_DEPLOY: 'Contract deploying',
+  WNEAR_TRANSACTIONS: 'wNEAR transactions',
+  FUNGIBLE_TOKENS: 'Fungible tokens',
+  NFT: 'NFTs',
+  OTHER: 'Other',
 };
 
 export const FILTER_ELEMENT = {
-  NEAR_TRANSFER_IN: 'In',
-  NEAR_TRANSFER_OUT: 'Out',
+  NEAR_TRANSFER_IN: 'Receive',
+  NEAR_TRANSFER_OUT: 'Send',
+  NEAR_TRANSFER_STORAGE: 'Storage deposit',
   ACCESS_KEYS_ADD: 'Add',
   ACCESS_KEYS_DELETE: 'Delete',
   STAKING_STAKE: 'Stake',
@@ -47,4 +52,11 @@ export const FILTER_ELEMENT = {
   CONTRACT_DEPLOY_DEPLOY: 'Deploy contract',
   ACCOUNTS_CREATE: 'Create',
   ACCOUNTS_DELETE: 'Delete',
+  WNEAR_TRANSACTIONS_WRAP: 'Wrap NEAR',
+  WNEAR_TRANSACTIONS_UNWRAP: 'Unwrap NEAR',
+  WNEAR_TRANSACTIONS_TO_AURORA: 'Transfers to Aurora',
+  WNEAR_TRANSACTIONS_RECEIVE: 'Receive',
+  WNEAR_TRANSACTIONS_SEND: 'Send',
+  WNEAR_TRANSACTIONS_OTHER: 'Other',
+  OTHER_FUNCTION_CALL: 'Unrecognized function calls'
 };
