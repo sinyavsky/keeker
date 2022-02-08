@@ -1,4 +1,4 @@
-import { ACTION_KIND, ACTION_DIRECTION, FILTER_SECTION, FILTER_ELEMENT } from './utils/constants.js';
+import { ACTION_KIND, FILTER_SECTION, FILTER_ELEMENT } from './utils/constants.js';
 import TransactionParser from './parser/TransactionParser.js';
 import { formatNearAmount } from "./utils/format.js";
 import iconNear from '../images/near.svg';
@@ -29,14 +29,12 @@ export default function getTransactionBaseData(trx, currentAccount, filter) {
       if(parser.getSignerId() === currentAccount) {
         const nearAmount = formatNearAmount(parser.getNearAmount());
         res.heading = `Send ${nearAmount} NEAR to ${parser.getNearReceiverId()}`;
-        res.actionDirection = ACTION_DIRECTION.OUT;
         res.iconSrc = iconNear;
         res.filterData = filter.addItem(FILTER_SECTION.NEAR_TRANSFER, FILTER_ELEMENT.NEAR_TRANSFER_OUT);
       }
       else {// receiver === currentAccount
         const nearAmount = formatNearAmount(parser.getNearAmount());
         res.heading = `Receive ${nearAmount} NEAR from ${parser.getSignerId()}`;
-        res.actionDirection = ACTION_DIRECTION.IN;
         res.iconSrc = iconNear;
         res.filterData = filter.addItem(FILTER_SECTION.NEAR_TRANSFER, FILTER_ELEMENT.NEAR_TRANSFER_IN);
       }

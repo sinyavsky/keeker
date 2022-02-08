@@ -1,4 +1,4 @@
-import { ACTION_KIND/*, ACTION_DIRECTION*/ } from '../utils/constants.js';
+import { ACTION_KIND } from '../utils/constants.js';
 import { formatDateFromNanoseconds } from '../utils/format.js';
 import { prettyPrintJson } from 'pretty-print-json';
 
@@ -8,7 +8,6 @@ export default class Transaction {
     this._heading = data.heading;
     this._iconSrc = data.iconSrc;
     this._actionKind = data.actionKind;
-    this._actionDirection = data.actionDirection;
     this._hash = data.hash;
     this._blockHash = data.blockHash;    
     this._blockTimestamp = data.blockTimestamp;
