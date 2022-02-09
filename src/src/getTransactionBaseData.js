@@ -58,10 +58,10 @@ export default function getTransactionBaseData(trx, currentAccount, filter) {
       res.iconSrc = iconContract;
       res.filterData = filter.addItem(FILTER_SECTION.CONTRACT_DEPLOY, FILTER_ELEMENT.CONTRACT_DEPLOY_DEPLOY);
     break;
-    case ACTION_KIND.STAKE: // todo: check is heading relevant
-      res.heading = 'Self';
+    case ACTION_KIND.STAKE:
+      res.heading = `Stake amount changed: ${formatNearAmount(parser.getStakeUpdatedValue())}`;
       res.iconSrc = iconStake;
-      res.filterData = filter.addItem(FILTER_SECTION.STAKING, FILTER_ELEMENT.STAKING_STAKE);
+      res.filterData = filter.addItem(FILTER_SECTION.STAKING, FILTER_ELEMENT.STAKING_AMOUNT_CHANGE);
     break;
     case ACTION_KIND.CREATE_ACCOUNT: // todo: check is heading relevant
       res.heading = `Create account ${parser.getCreatedAccount()}`;

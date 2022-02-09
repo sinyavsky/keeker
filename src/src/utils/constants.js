@@ -46,6 +46,7 @@ export const FILTER_ELEMENT = {
   NEAR_TRANSFER_STORAGE: 'Storage deposit',
   ACCESS_KEYS_ADD: 'Add',
   ACCESS_KEYS_DELETE: 'Delete',
+  STAKING_AMOUNT_CHANGE: 'Stake amount change',
   STAKING_STAKE: 'Stake',
   STAKING_UNSTAKE: 'Unstake',
   STAKING_WITHDRAW: 'Withdraw',

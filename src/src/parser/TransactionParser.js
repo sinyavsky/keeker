@@ -127,4 +127,10 @@ export default class TransactionParser {
     return this._trx.args.args_json.amount;
   }
 
+  getStakeUpdatedValue() { 
+    return this._trx.args.stake;
+  }
+
+
+
 }
