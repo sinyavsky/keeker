@@ -39,7 +39,7 @@ export default function getTransactionBaseData(trx, currentAccount, filter) {
         res.filterData = filter.addItem(FILTER_SECTION.NEAR_TRANSFER, FILTER_ELEMENT.NEAR_TRANSFER_IN);
       }
     break;
-    case ACTION_KIND.ADD_KEY: { // todo: check is heading relevant
+    case ACTION_KIND.ADD_KEY: {
       res.heading = `Add key ${parser.getAddedPublicKey()} with access ${parser.getAddedPublicKeyPermission()}`;
       const keyReceiver = parser.getAddedPublicKeyReceiver();
       if(keyReceiver) {
@@ -48,18 +48,18 @@ export default function getTransactionBaseData(trx, currentAccount, filter) {
       res.iconSrc = iconKey;
       res.filterData = filter.addItem(FILTER_SECTION.ACCESS_KEYS, FILTER_ELEMENT.ACCESS_KEYS_ADD);
     } break;
-    case ACTION_KIND.DELETE_KEY: // todo: check is heading relevant
+    case ACTION_KIND.DELETE_KEY:
       res.heading = `Delete key ${parser.getDeletedPublicKey()}`;
       res.iconSrc = iconKey;
       res.filterData = filter.addItem(FILTER_SECTION.ACCESS_KEYS, FILTER_ELEMENT.ACCESS_KEYS_DELETE);
     break;
-    case ACTION_KIND.DEPLOY_CONTRACT: // todo: check is heading relevant
-      res.heading = 'Deploy contract';
+    case ACTION_KIND.DEPLOY_CONTRACT:
+      res.heading = `Deploy contract ${parser.getFunctionCallReceiver()}`;
       res.iconSrc = iconContract;
       res.filterData = filter.addItem(FILTER_SECTION.CONTRACT_DEPLOY, FILTER_ELEMENT.CONTRACT_DEPLOY_DEPLOY);
     break;
     case ACTION_KIND.STAKE: // todo: check is heading relevant
-      res.heading = 'Stake';
+      res.heading = 'Self';
       res.iconSrc = iconStake;
       res.filterData = filter.addItem(FILTER_SECTION.STAKING, FILTER_ELEMENT.STAKING_STAKE);
     break;
