@@ -1,6 +1,6 @@
 import { FILTER_SECTION, FILTER_ELEMENT } from '../utils/constants.js';
 import { formatNearAmount } from '../utils/format.js';
-import iconAurora from '../../images/aurora.png';
+import iconAurora from '../../images/aurora.svg';
 
 export default function transferToAurora(parser) {
   if(parser.getFunctionCallReceiver() === 'wrap.near'
