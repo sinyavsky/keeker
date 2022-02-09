@@ -10,7 +10,7 @@ export function formatTokenAmount(balance, nomination) {
   if(pos > 0) {
     return parseFloat(`${balance.slice(0, pos)}.${balance.slice(pos)}`);
   }
-  return parseFloat(`${'0'.repeat(pos+1)}.${balance}`);
+  return parseFloat(`0.${'0'.repeat(Math.abs(pos))}${balance}`);
 }
 
 export function formatDateFromNanoseconds(timestamp) {
