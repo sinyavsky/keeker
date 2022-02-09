@@ -2,7 +2,7 @@ import { FILTER_SECTION, FILTER_ELEMENT } from '../utils/constants.js';
 import { formatNearAmount } from '../utils/format.js';
 import iconNear from '../../images/near.svg';
 
-export default function validatorNode(parser, validatorsList) {
+export default function validatorNode(parser, validatorsList, currentAccount) {
   const account = parser.getFunctionCallReceiver();
 
   if(!validatorsList.includes(account)) {
@@ -18,9 +18,13 @@ export default function validatorNode(parser, validatorsList) {
 
   if (method === 'deposit_and_stake') {
     const nearAmount = formatNearAmount(parser.getValidatorDepositAndStakeAmount());
+    let heading = `Deposit and stake ${nearAmount} NEAR to the validator ${account}`;
+    if(parser.getSignerId() !== currentAccount) {
+      heading += ` by ${parser.getSignerId()}`;
+    }
     return {
       ...res,
-      heading: `Deposit and stake ${nearAmount} NEAR to the validator ${account}`,
+      heading,
       filterSection: FILTER_SECTION.STAKING,
       filterElement: FILTER_ELEMENT.STAKING_STAKE,
     };

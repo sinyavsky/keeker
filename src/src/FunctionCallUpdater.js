@@ -46,7 +46,7 @@ export default class FunctionCallUpdater {
       return;
     }
 
-    if(this._recognized(validatorNode(this._trxParser, this._validatorsList))) {
+    if(this._recognized(validatorNode(this._trxParser, this._validatorsList, this._currentAccount))) {
       return;
     }
 
