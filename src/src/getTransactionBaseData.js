@@ -63,12 +63,12 @@ export default function getTransactionBaseData(trx, currentAccount, filter) {
       res.iconSrc = iconStake;
       res.filterData = filter.addItem(FILTER_SECTION.STAKING, FILTER_ELEMENT.STAKING_AMOUNT_CHANGE);
     break;
-    case ACTION_KIND.CREATE_ACCOUNT: // todo: check is heading relevant
+    case ACTION_KIND.CREATE_ACCOUNT:
       res.heading = `Create account ${parser.getCreatedAccount()}`;
       res.iconSrc = iconCreateAccount;
       res.filterData = filter.addItem(FILTER_SECTION.ACCOUNTS, FILTER_ELEMENT.ACCOUNTS_CREATE);
     break;
-    case ACTION_KIND.DELETE_ACCOUNT: { // todo: check is heading relevant
+    case ACTION_KIND.DELETE_ACCOUNT: {
       res.heading = `Delete account ${parser.getDeletedAccount()}`;
       const beneficiary = parser.getDeletedAccountBeneficiary();
       if(beneficiary) {
