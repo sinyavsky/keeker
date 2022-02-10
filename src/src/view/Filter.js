@@ -6,6 +6,8 @@ export default class Filter {
     this._filterList = document.querySelector(cfg.selFilterList);
     this._filterItemTemplate = document.querySelector(cfg.selFilterItemTemplate);
     this._filterSectionItemTemplate = document.querySelector(cfg.selFilterSectionItemTemplate);
+    this._filterShowAll = this._filter.querySelector(cfg.selFilterShowAll);
+    this._filterHideAll = this._filter.querySelector(cfg.selFilterHideAll);
 
     this._selFilterSectionHeading = cfg.selFilterSectionHeading;
     this._selFilterSectionList = cfg.selFilterSectionList;
@@ -25,6 +27,8 @@ export default class Filter {
         items: {},
       };
     });
+
+    this._addButtonsLisnteners();
   }
 
   _hideFilter() {
@@ -34,6 +38,25 @@ export default class Filter {
   _showFilter() {
     this._filter.classList.add(this._classFilterVisible);
   }
+
+  _addButtonsLisnteners = () => {
+
+    this._filterShowAll.addEventListener('click', () => {
+      this._filter.querySelectorAll(this._selFilterCheckbox).forEach((item) => {
+        if(!item.checked) {
+          item.click();
+        }
+      });
+    });
+
+    this._filterHideAll.addEventListener('click', () => {
+      this._filter.querySelectorAll(this._selFilterCheckbox).forEach((item) => {
+        if(item.checked) {
+          item.click();
+        }
+      });
+    });
+  };
 
   clear = () => {
     Object.values(this._data).forEach((section) => {

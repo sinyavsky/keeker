@@ -45,6 +45,8 @@ const filter = new Filter({
   selFilterLabel: '.filter__label',
   selFilterCheckbox: '.filter__checkbox',
   selTransaction: '.transaction',
+  selFilterShowAll: '.filter__button-select',
+  selFilterHideAll: '.filter__button-deselect',
   classFilterVisible: 'filter_visible',
   classTransactionHidden: 'transaction_hidden',
   attrFilter: 'data-filter',

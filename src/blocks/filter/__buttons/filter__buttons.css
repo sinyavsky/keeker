@@ -1,0 +1,6 @@
+.filter__buttons {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 140px));
+  gap: 8px;
+  margin-top: 4px;
+}

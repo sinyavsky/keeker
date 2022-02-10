@@ -36,6 +36,7 @@
 @import url("../blocks/filter/__section-list/filter__section-list.css");
 @import url("../blocks/filter/__label/filter__label.css");
 @import url("../blocks/filter/__checkbox/filter__checkbox.css");
+@import url("../blocks/filter/__buttons/filter__buttons.css");
 
 @import url("../blocks/transactions/transactions.css");
 @import url("../blocks/transactions/__list/transactions__list.css");
