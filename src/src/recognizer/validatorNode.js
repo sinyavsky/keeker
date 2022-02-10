@@ -25,8 +25,10 @@ export default function validatorNode(parser, validatorsList, currentAccount) {
     return {
       ...res,
       heading,
-      filterSection: FILTER_SECTION.STAKING,
-      filterElement: FILTER_ELEMENT.STAKING_STAKE,
+      filter: {
+        section: FILTER_SECTION.STAKING,
+        element: FILTER_ELEMENT.STAKING_STAKE,
+      },
     };
   }
   else if (method === 'unstake') {
@@ -34,24 +36,30 @@ export default function validatorNode(parser, validatorsList, currentAccount) {
     return {
       ...res,
       heading: `Unstake ${nearAmount} NEAR from the validator ${account}`,
-      filterSection: FILTER_SECTION.STAKING,
-      filterElement: FILTER_ELEMENT.STAKING_UNSTAKE,
+      filter: {
+        section: FILTER_SECTION.STAKING,
+        element: FILTER_ELEMENT.STAKING_UNSTAKE,
+      },
     };
   }
   else if (method === 'withdraw_all') {
     return {
       ...res,
       heading: `Widthdraw all available NEAR from the validator ${account}`,
-      filterSection: FILTER_SECTION.STAKING,
-      filterElement: FILTER_ELEMENT.STAKING_WITHDRAW,
+      filter: {
+        section: FILTER_SECTION.STAKING,
+        element: FILTER_ELEMENT.STAKING_WITHDRAW,
+      },   
     };
   }
   else if (method === 'unstake_all') {
     return {
       ...res,
       heading: `Unstake all available NEAR from the validator ${account}`,
-      filterSection: FILTER_SECTION.STAKING,
-      filterElement: FILTER_ELEMENT.STAKING_UNSTAKE,
+      filter: {
+        section: FILTER_SECTION.STAKING,
+        element: FILTER_ELEMENT.STAKING_UNSTAKE,
+      },      
     };
   }
   return false;

@@ -50,6 +50,20 @@ export default class Filter {
     return `filter-${Object.keys(this._data).indexOf(section)}-${Object.keys(this._data[section].items).indexOf(item)}`;
   };
 
+  _getActiveFilters() {
+    const inputs = this._filter.querySelectorAll(this._selFilterCheckbox);
+    if(inputs.length === 0) {
+      return [];
+    }
+
+    return [...inputs].reduce((prev, cur) => {
+      if(cur.checked) {
+        prev.push(cur.getAttribute(this._attrFilter));
+      }
+      return prev;
+   }, []);
+  }
+
   render = () => {
     this._showFilter();
     Object.entries(this._data).forEach((sectionEntry) => {
@@ -65,23 +79,24 @@ export default class Filter {
           elementItem.querySelector(this._selFilterLabel).insertAdjacentText('beforeend', `${item.name} (${item.count})`);
           const filterString = this._generateData(sectionKey, itemKey);
           const filterCheckbox = elementItem.querySelector(this._selFilterCheckbox);
-          filterCheckbox.setAttribute(this._attrFilter, this._generateData(sectionKey, filterString));
-          filterCheckbox.addEventListener('change', (event) => {
-            const transactions = document.querySelectorAll(`${this._selTransaction}[${this._attrFilter}='${filterString}']`);
+          filterCheckbox.setAttribute(this._attrFilter, filterString);
+
+          filterCheckbox.addEventListener('change', () => {
+            const transactions = document.querySelectorAll(`${this._selTransaction}[${this._attrFilter}*='${filterString}']`);
             if(transactions.length > 0) {
-              if(event.currentTarget.checked) {
-                transactions.forEach((trx) => {
+              const activeFilters = this._getActiveFilters();
+              transactions.forEach((trx) => {
+                const trxFilters = trx.getAttribute(this._attrFilter).split(' ');           
+                if(activeFilters.some(r=> trxFilters.includes(r))) {
                   trx.classList.remove(this._classTransactionHidden);
-                });
-              }
-              else {
-                transactions.forEach((trx) => {
+                }
+                else {
                   trx.classList.add(this._classTransactionHidden);
-                });
-              }
-            }
-            
+                }            
+              });  
+            }            
           });
+
           sectionList.append(elementItem);
         }
       });

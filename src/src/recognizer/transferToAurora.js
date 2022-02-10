@@ -12,8 +12,10 @@ export default function transferToAurora(parser) {
       heading: `Wrap ${nearAmount} NEAR and send it to Aurora address 0x${parser.getFtTransferCallMessage()}`,
       iconSrc: iconAurora,
       iconAlt: 'Aurora',
-      filterSection: FILTER_SECTION.WNEAR_TRANSACTIONS,
-      filterElement: FILTER_ELEMENT.WNEAR_TRANSACTIONS_TO_AURORA,
+      filter: {
+        section: FILTER_SECTION.WNEAR_TRANSACTIONS,
+        element: FILTER_ELEMENT.WNEAR_TRANSACTIONS_TO_AURORA,
+      }
     };
   }
   return false;

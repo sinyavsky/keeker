@@ -14,30 +14,32 @@ export default function accountWrap(parser, metadata, currentAccount) {
     heading: `Call function ${method} from contract ${account}`,
     iconSrc: iconNear,
     iconAlt: 'Wrapped NEAR',
-    filterSection: FILTER_SECTION.WNEAR_TRANSACTIONS,
-    filterElement: FILTER_ELEMENT.WNEAR_TRANSACTIONS_OTHER,
+    filter: {
+      section: FILTER_SECTION.WNEAR_TRANSACTIONS,
+      element: FILTER_ELEMENT.WNEAR_TRANSACTIONS_OTHER,
+    },    
   };
  
   if(method === "near_deposit") {
     const tokenAmount = formatNearAmount(parser.getWrapNearDepositAmount());
     res.heading = `Wrap ${tokenAmount} NEAR using wrap.near contract`;
-    res.filterElement = FILTER_ELEMENT.WNEAR_TRANSACTIONS_WRAP;
+    res.filter.element = FILTER_ELEMENT.WNEAR_TRANSACTIONS_WRAP;
   }
   else if(method === "near_withdraw") {
     const tokenAmount = formatNearAmount(parser.getWrapNearWidthdrawAmount());
     res.heading = `Unwrap ${tokenAmount} NEAR using wrap.near contract`;     
-    res.filterElement = FILTER_ELEMENT.WNEAR_TRANSACTIONS_UNWRAP;
+    res.filter.element = FILTER_ELEMENT.WNEAR_TRANSACTIONS_UNWRAP;
   }
 
   else if(method === "ft_transfer_call" || method === "ft_transfer") {
     const tokenAmount = formatTokenAmount(parser.getFtTransferAmount(), metadata.decimals);
     if(parser.getSignerId() === currentAccount) {
       res.heading = `Send ${tokenAmount} wNEAR to ${parser.getFtTransferReceiver()}`;      
-      res.filterElement = FILTER_ELEMENT.WNEAR_TRANSACTIONS_SEND;
+      res.filter.element = FILTER_ELEMENT.WNEAR_TRANSACTIONS_SEND;
     }
     else {
       res.heading = `Receive ${tokenAmount} wNEAR from ${parser.getFtTransferReceiver()}`;
-      res.filterElement = FILTER_ELEMENT.WNEAR_TRANSACTIONS_RECEIVE;
+      res.filter.element = FILTER_ELEMENT.WNEAR_TRANSACTIONS_RECEIVE;
     }    
   }
   else if(method === "storage_deposit") {
@@ -46,8 +48,8 @@ export default function accountWrap(parser, metadata, currentAccount) {
     if(parser.getStorageDepositReceiver() != currentAccount) {
       res.heading += ` for account ${parser.getStorageDepositReceiver()}`;
     }
-    res.filterSection = FILTER_SECTION.NEAR_TRANSFER,
-    res.filterElement = FILTER_ELEMENT.NEAR_TRANSFER_STORAGE;
+    res.filter.section = FILTER_SECTION.NEAR_TRANSFER,
+    res.filter.element = FILTER_ELEMENT.NEAR_TRANSFER_STORAGE;
   }
 
   else if(method === "storage_widthdraw") {// todo: widthraw near from contract storage

@@ -26,68 +26,101 @@ export default class FunctionCallUpdater {
     this._heading = '';
     this._iconSrc = '';
     this._iconAlt = '';
-    this._filterData = '';
+    this._filterData = [];
   }
 
-  _recognized(data) {
+  _addFilterData(data) {
+    this._filterData.push(data);
+  }
+
+  _recognize(data) {
     if(data === false) {
       return false;
     }
-    this._filterData = this._filter.addItem(data.filterSection, data.filterElement),
-    this._heading = data.heading;
-    this._iconSrc = data.iconSrc;
-    this._iconAlt = data.iconAlt;
+    // 1 trx can have multiple filters
+    if(Array.isArray(data.filter)) {
+      data.filter.forEach((item) => {
+        this._addFilterData(this._filter.addItem(item.section, item.element));
+      });
+    }
+    else {
+      this._addFilterData(this._filter.addItem(data.filter.section, data.filter.element));
+    }
+    
+
+    // add heading and icon only if not set before
+    if(!this._heading) {
+      this._heading = data.heading;
+    }
+
+    if(!this._iconSrc) {
+      this._iconSrc = data.iconSrc;
+    }
+    
+    if(!this._iconSrc) {
+      this._iconAlt = data.iconAlt;
+    }   
+
     return true;
   }
 
   async _prepare() {
     
-    if(this._recognized(transferToAurora(this._trxParser))) {
+    // first, let's check transactions that can be assigned only to 1 filter
+
+    if(this._recognize(transferToAurora(this._trxParser))) {
       return;
     }
 
-    if(this._recognized(validatorNode(this._trxParser, this._validatorsList, this._currentAccount))) {
+    if(this._recognize(validatorNode(this._trxParser, this._validatorsList, this._currentAccount))) {
       return;
     }
 
-    if(this._recognized(accountNear(this._trxParser))) {
+    if(this._recognize(accountNear(this._trxParser))) {
       return;
     }
 
-    if(this._recognized(launchpadBocaChica(this._trxParser))) {
-      return;
-    }
+    // so transaction can have multiple filter
+
+    this._recognize(launchpadBocaChica(this._trxParser));
 
     const contractData = await this._contractApi.getContractData(this._trxParser.getFunctionCallReceiver());
     const contractInterface = parseContractInterface(contractData);
     
     if(contractInterface === CONTRACT_INTERFACE.FUNGIBLE_TOKEN) {
       const metadata = await this._contractApi.ft_metadata(this._trxParser.getFunctionCallReceiver());
-      if(this._recognized(accountWrap(this._trxParser, metadata, this._currentAccount))) {
-        return;
+      if(!this._recognize(accountWrap(this._trxParser, metadata, this._currentAccount))) { // we don't want duplicate wNEAR to Fungible token section
+        this._recognize(fungibleToken(this._trxParser, metadata, this._currentAccount));
       }
-      if(this._recognized(fungibleToken(this._trxParser, metadata, this._currentAccount))) {
-        return;
-      }
+      
     }
     else if(contractInterface === CONTRACT_INTERFACE.NON_FUNGIBLE_TOKEN) {
       const metadata = await this._contractApi.nft_metadata(this._trxParser.getFunctionCallReceiver());
-      if(this._recognized(nonFungibleToken(this._trxParser, metadata))) {
-        return;
-      }
+      this._recognize(nonFungibleToken(this._trxParser, metadata));
     }
 
-    // default function call
-    this._heading = `Call function ${this._trxParser.getFunctionCallMethod()} from contract ${this._trxParser.getFunctionCallReceiver()}`;
-    this._iconSrc = iconFunctionCall;
-    this._iconAlt = 'Function Call';
-    this._filterData = this._filter.addItem(FILTER_SECTION.OTHER, FILTER_ELEMENT.OTHER_FUNCTION_CALL);
+    // since recognizers may return not full set of info
+    if(!this._heading) { 
+      this._heading = `Call function ${this._trxParser.getFunctionCallMethod()} from contract ${this._trxParser.getFunctionCallReceiver()}`;
+    }
+
+    if(!this._iconSrc) {
+      this._iconSrc = iconFunctionCall;
+    }
+
+    if(!this._iconAlt) {
+      this._iconAlt = 'Function Call';
+    }
+    
+    if(this._filterData.length === 0) {
+      this._addFilterData(this._filter.addItem(FILTER_SECTION.OTHER, FILTER_ELEMENT.OTHER_FUNCTION_CALL));
+    } 
   }
 
   async update() {
     await this._prepare();
     
-    this._trxElement.setAttribute('data-filter', this._filterData);
+    this._trxElement.setAttribute('data-filter', this._filterData.join(' '));
     this._headingElement.innerHTML = this._heading;
     this._iconElement.innerHTML = `<img src="${this._iconSrc}" alt="${this.__iconAlt}" class="transaction__icon-picture">`;
   }

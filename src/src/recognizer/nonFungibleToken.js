@@ -8,8 +8,10 @@ export default function nonFungibleToken(parser, metadata) {
     heading: `Interraction with NFT contract ${tokenName}`,
     iconSrc: iconNear, // todo: add default icon
     iconAlt: metadata.name,
-    filterSection: FILTER_SECTION.NFT,
-    filterElement: tokenName,
+    filter: {
+      section: FILTER_SECTION.NFT,
+      element: tokenName,
+    },
   };
   
   if(metadata.icon && metadata.icon.length > 0) {

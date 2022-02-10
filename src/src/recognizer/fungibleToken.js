@@ -9,9 +9,11 @@ export default function fungibleToken(parser, metadata, currentAccount) {
   const res = {
     heading: `Call function ${method} from Fungible token contract ${parser.getFunctionCallReceiver()}`,
     iconSrc: iconNear, // todo: add default icon
-    iconAlt: metadata.name,    
-    filterSection: FILTER_SECTION.FUNGIBLE_TOKENS,
-    filterElement: tokenName,
+    iconAlt: metadata.name,
+    filter: {
+      section: FILTER_SECTION.FUNGIBLE_TOKENS,
+      element: tokenName,
+    },
   };  
 
   if(metadata.icon && metadata.icon.length > 0) {
@@ -35,8 +37,17 @@ export default function fungibleToken(parser, metadata, currentAccount) {
     }
     res.iconSrc = iconNear;
     res.iconAlt = 'Near';
-    res.filterSection = FILTER_SECTION.NEAR_TRANSFER;
-    res.filterElement = FILTER_ELEMENT.NEAR_TRANSFER_STORAGE;
+    res.filter = [
+      {
+        section: FILTER_SECTION.NEAR_TRANSFER,
+        element: FILTER_ELEMENT.NEAR_TRANSFER_STORAGE,
+      },
+      {
+        section: FILTER_SECTION.FUNGIBLE_TOKENS,
+        element: tokenName,
+      },
+    ];
+    
   }
 
   else if(method === "storage_widthdraw") {// todo: widthraw near from contract storage

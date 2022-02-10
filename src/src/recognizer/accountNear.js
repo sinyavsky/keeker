@@ -10,8 +10,16 @@ export default function accountNear(parser) {
         heading: `Create account ${createdAccount.name} and deposit ${formatNearAmount(createdAccount.deposit)} NEAR into it`,
         iconSrc: iconNear,
         iconAlt: 'Near',
-        filterSection: FILTER_SECTION.ACCOUNTS,
-        filterElement: FILTER_ELEMENT.ACCOUNTS_CREATE,
+        filter: [
+          {
+            section: FILTER_SECTION.ACCOUNTS,
+            element: FILTER_ELEMENT.ACCOUNTS_CREATE,
+          },
+          {
+            section: FILTER_SECTION.NEAR_TRANSFER,
+            element: FILTER_ELEMENT.NEAR_TRANSFER_STORAGE,
+          },
+        ],
       };
     }
   }
