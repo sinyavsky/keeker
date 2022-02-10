@@ -6,6 +6,7 @@
 @import url("../blocks/page/page.css");
 @import url("../blocks/sidebar/sidebar.css");
 @import url("../blocks/sidebar/__heading/sidebar__heading.css");
+@import url("../blocks/sidebar/__heading-label/sidebar__heading-label.css");
 @import url("../blocks/sidebar/__description/sidebar__description.css");
 
 @import url("../blocks/content/content.css");
