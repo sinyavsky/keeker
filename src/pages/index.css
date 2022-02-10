@@ -20,6 +20,7 @@
 @import url("../blocks/entrance/__form/entrance__form.css");
 @import url("../blocks/entrance/__input/entrance__input.css");
 @import url("../blocks/entrance/__label/entrance__label.css");
+@import url("../blocks/entrance/__hint/entrance__hint.css");
 @import url("../blocks/entrance/__button/entrance__button.css");
 
 @import url("../blocks/progress-bar/progress-bar.css");
