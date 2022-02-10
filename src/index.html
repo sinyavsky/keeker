@@ -17,8 +17,8 @@
       <h1 class="entrance__heading">Submit NEAR account ID:</h1>
       <form class="entrance__form">
         <input type="text" class="entrance__input entrance__input_type_account" placeholder="Example: rybkaklaus.near" required>
-        <label class="entrance__label">Transactions amount to show:</label>
-        <input type="number" class="entrance__input entrance__input_type_limit" value="200" min="1" placeholder="Example: 200" required>
+        <label class="entrance__label" for="entrance-limit">Transactions amount to show:</label>
+        <input type="number" id="entrance-limit" class="entrance__input entrance__input_type_limit" value="200" min="1" placeholder="Example: 200" required>
         <button type="submit" class="entrance__button">Go</button>
       </form>
       <p class="progress-bar"><span class="loader loader_size_small progress-bar__loader"></span><span class="progress-bar__text"></span> <span class="progress-bar__current"></span> / <span class="progress-bar__total"></span></p>
