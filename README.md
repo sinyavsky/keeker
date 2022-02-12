@@ -1,5 +1,7 @@
 # Keekr
 
+App url: https://sinyavsky.github.io/keeker/
+
 Alternative way to browse transaction list of the account on NEAR protocol. 
 
 ## What exact problem does Keekr solve?
