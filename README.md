@@ -1,6 +1,6 @@
 # Keekr
 
-Alternative way to browse transaction list of accounts on NEAR protocol. 
+Alternative way to browse transaction list of the account on NEAR protocol. 
 
 ## What exact problem does Keekr solve?
 
@@ -19,26 +19,44 @@ Wrap 1,000 NEAR using wrap.near contract
 Deposit and stake 2,548 NEAR to the validator aurora.pool.near
 ```
 
-Yes, it couldn't "humanize" each function call, but it still better than nothing (below you can see the list of function calls that Keekr can handle).
+Yes, it couldn't "humanize" each function call, but it still better than nothing.
 
-Another fancy thing: Keekr allows you to filter transaction list. I.e. you can browse only transactions related for specific token or NFT contract.
-
-## What kind of function calls can it recognize?
+## What kind of function calls can Keekr recognize?
 
 ### Most important infrastructure actions:
 - wNEAR transfers to Aurora
 - Stake / Unstake / Withdraw actions on validators
 - Account creating via near contract
+- NEAR wrap / unwrap actions
 - Fungible tokens transfers / storage deposit
 - Interactions with NFT contracts
 
-### Some method calls of another familiar contracts
+### Some method calls of another familiar contracts:
 - BocaChica launchpad
 - Npunks (NEAR Punks) contract
 
+### And off course it can handle other [action types](https://nomicon.io/RuntimeSpec/Actions) that are not related to function calls:
+
+- CreateAccount
+- DeployContract
+- Transfer
+- Stake
+- AddKey
+- DeleteKey
+- DeleteAccount
+
+## Filter transaction list
+
+Another fancy thing: Keekr allows you to filter transaction list. I.e. you can browse only transactions related for specific token or NFT contract.
+
+## Known issues
+
+- Keekr uses super cool [near-contract-parser](https://github.com/encody/near-contract-parser) to recognize possible interface of the contract. This procedure takes few seconds and may freeze browser's tab. Obvious solution is to move this execution on the server side and cache it.
+
+## Future plans
+
+If this modest app will be useful for the community and NEAR team in the NEARest future will not release an update for the explorer with similiar features (I know they are improving explorer right now, but I don't know what exacly to expect), then I will continue to maintain this project and add new functionality.
 
 ## Disclaimer
 
-Please, keep in mind that this is the first app that I've been developing by myself. I don't have much experience in building applications. So be prepared to face some strange (awful) coding solutions inside. 
-
-If this app will be useful for the community and NEAR team will not release an update for NEAR explorer in the NEARest future (they are working on it right now as far as I know), then I will continue to maintain this project and add new functionality.
+Please, keep in mind that this is the first app that I've been developing by myself. I don't have much experience in building applications. So be prepared to face some strange (awful?) coding solutions inside.
