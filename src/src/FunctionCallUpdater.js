@@ -81,7 +81,7 @@ export default class FunctionCallUpdater {
       return;
     }
 
-    if(this._recognize(dexRefFinance(this._trxParser))) { // todo: will not assign FT section to filter, solution needed
+    if(this._recognize(await dexRefFinance(this._trxParser))) { // todo: will not assign FT section to filter, solution needed
       return;
     }
 
