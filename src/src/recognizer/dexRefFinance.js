@@ -18,12 +18,10 @@ export default function dexRefFinance(parser) {
   const method = parser.getFunctionCallMethod();  
   if(method === 'swap') {
     const actions = parser.getArgsJson().actions;
-    console.log(actions);
     const actionsArr = actions.reduce((prev, cur) => {
       prev.push(`${cur.amount_in} ${cur.token_in} for ${cur.min_amount_out} ${cur.token_out}`);
       return prev;
     }, []);
-    console.log(actionsArr);
     return {
       ...res,
       heading: `Swap ${actionsArr.join(', ')} at Ref.finance`,
