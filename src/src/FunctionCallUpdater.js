@@ -2,6 +2,7 @@ import { CONTRACT_INTERFACE, FILTER_SECTION, FILTER_ELEMENT } from './utils/cons
 import iconFunctionCall from '../images/function-call.svg';
 import TransactionParser from './parser/TransactionParser.js';
 import parseContractInterface from './parser/parseContractInterface.js';
+import contractApi from './api/contractApi.js';
 
 import transferToAurora from './recognizer/transferToAurora.js';
 import validatorNode from './recognizer/validatorNode.js';
@@ -18,7 +19,6 @@ export default class FunctionCallUpdater {
     this._headingElement = data.headingElement;
     this._iconElement = data.iconElement;
     this._currentAccount = data.currentAccount;
-    this._contractApi = data.contractApi;
     this._validatorsList = data.validatorsList;
     this._trxParser = new TransactionParser(data.trx);
 
@@ -89,18 +89,18 @@ export default class FunctionCallUpdater {
 
     this._recognize(launchpadBocaChica(this._trxParser));
 
-    const contractData = await this._contractApi.getContractData(this._trxParser.getFunctionCallReceiver());
+    const contractData = await contractApi.getContractData(this._trxParser.getFunctionCallReceiver());
     const contractInterface = parseContractInterface(contractData);
     
     if(contractInterface === CONTRACT_INTERFACE.FUNGIBLE_TOKEN) {
-      const metadata = await this._contractApi.ft_metadata(this._trxParser.getFunctionCallReceiver());
+      const metadata = await contractApi.ft_metadata(this._trxParser.getFunctionCallReceiver());
       if(!this._recognize(accountWrap(this._trxParser, metadata, this._currentAccount))) { // we don't want duplicate wNEAR to Fungible token section
         this._recognize(fungibleToken(this._trxParser, metadata, this._currentAccount));
       }
       
     }
     else if(contractInterface === CONTRACT_INTERFACE.NON_FUNGIBLE_TOKEN) {
-      const metadata = await this._contractApi.nft_metadata(this._trxParser.getFunctionCallReceiver());
+      const metadata = await contractApi.nft_metadata(this._trxParser.getFunctionCallReceiver());
       this._recognize(nonFungibleToken(this._trxParser, metadata));
     }
 

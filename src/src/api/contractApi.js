@@ -2,7 +2,7 @@ import { Near } from 'near-api-js';
 import { parseContract } from 'near-contract-parser';
 import { nearConnectionConfig } from '../utils/constants.js';
 
-export default class ContractApi {
+class ContractApi {
 
   constructor() {
     this._near = new Near(nearConnectionConfig);
@@ -96,5 +96,7 @@ export default class ContractApi {
       return {};
     }
   }
-
 }
+
+const contractApi = new ContractApi(); // should be global because of caching inside
+export default contractApi;

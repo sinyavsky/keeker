@@ -6,7 +6,6 @@ if (process.env.NODE_ENV === 'development') {
 
 import getSourceTransactions from '../src/api/getSourceTransactions.js';
 import getValidatorsList from '../src/api/getValidatorsList.js';
-import ContractApi from '../src/api/ContractApi.js';
 
 import getTransactionBaseData from '../src/getTransactionBaseData.js';
 import FunctionCallUpdater from '../src/FunctionCallUpdater.js';
@@ -54,7 +53,6 @@ const filter = new Filter({
 
 
 const transactionsList = new TransactionsList('.transactions__list');
-const contractApi = new ContractApi(); // should be global because of caching inside
 const validatorsList = await getValidatorsList();
 entranceForm.addSubmitListener(async function (e) {
   e.preventDefault();
@@ -111,7 +109,6 @@ entranceForm.addSubmitListener(async function (e) {
         const functionCallUpdater = new FunctionCallUpdater({
           ...functionCallUpdaterQueue[i],
           currentAccount: account,
-          contractApi,
           validatorsList,
         });
         await functionCallUpdater.update();
