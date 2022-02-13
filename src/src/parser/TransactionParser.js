@@ -131,6 +131,8 @@ export default class TransactionParser {
     return this._trx.args.stake;
   }
 
-
+  getArgsJson() {
+    return this._trx.args.args_json;
+  }
 
 }
