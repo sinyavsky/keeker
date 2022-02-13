@@ -1,13 +1,16 @@
 import { FILTER_SECTION, FILTER_ELEMENT } from '../utils/constants.js';
 import { formatNearAmount, formatTokenAmount } from '../utils/format.js';
+import contractApi from '../api/contractApi.js';
 import iconNear from '../../images/near.svg';
 
-export default function fungibleToken(parser, metadata, currentAccount) {
+export default async function fungibleToken(parser, currentAccount) {
   const method = parser.getFunctionCallMethod();
+  const receiver = parser.getFunctionCallReceiver();
+  const metadata = await contractApi.ft_metadata(receiver);
   let tokenName = metadata.symbol === metadata.name ? metadata.symbol : `${metadata.symbol} (${metadata.name})`;
 
   const res = {
-    heading: `Call function ${method} from Fungible token contract ${parser.getFunctionCallReceiver()}`,
+    heading: `Call function ${method} from Fungible token contract ${receiver}`,
     iconSrc: iconNear, // todo: add default icon
     iconAlt: metadata.name,
     filter: {

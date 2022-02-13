@@ -1,8 +1,9 @@
 import { FILTER_SECTION, FILTER_ELEMENT } from '../utils/constants.js';
 import { formatNearAmount, formatTokenAmount } from '../utils/format.js';
+import contractApi from '../api/contractApi.js';
 import iconNear from '../../images/near.svg';
 
-export default function accountWrap(parser, metadata, currentAccount) {
+export default async function accountWrap(parser, currentAccount) {
   const account = parser.getFunctionCallReceiver();
   if(account !== 'wrap.near') {
     return false;
@@ -32,6 +33,7 @@ export default function accountWrap(parser, metadata, currentAccount) {
   }
 
   else if(method === "ft_transfer_call" || method === "ft_transfer") {
+    const metadata = await contractApi.ft_metadata(account);
     const tokenAmount = formatTokenAmount(parser.getFtTransferAmount(), metadata.decimals);
     if(parser.getSignerId() === currentAccount) {
       res.heading = `Send ${tokenAmount} wNEAR to ${parser.getFtTransferReceiver()}`;      

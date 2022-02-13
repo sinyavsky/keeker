@@ -93,15 +93,13 @@ export default class FunctionCallUpdater {
     const contractInterface = parseContractInterface(contractData);
     
     if(contractInterface === CONTRACT_INTERFACE.FUNGIBLE_TOKEN) {
-      const metadata = await contractApi.ft_metadata(this._trxParser.getFunctionCallReceiver());
-      if(!this._recognize(accountWrap(this._trxParser, metadata, this._currentAccount))) { // we don't want duplicate wNEAR to Fungible token section
-        this._recognize(fungibleToken(this._trxParser, metadata, this._currentAccount));
+      if(!this._recognize(await accountWrap(this._trxParser, this._currentAccount))) { // we don't want duplicate wNEAR to Fungible token section
+        this._recognize(await fungibleToken(this._trxParser, this._currentAccount));
       }
       
     }
     else if(contractInterface === CONTRACT_INTERFACE.NON_FUNGIBLE_TOKEN) {
-      const metadata = await contractApi.nft_metadata(this._trxParser.getFunctionCallReceiver());
-      this._recognize(nonFungibleToken(this._trxParser, metadata));
+      this._recognize(await nonFungibleToken(this._trxParser));
     }
 
     // since recognizers may return not full set of info
