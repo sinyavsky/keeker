@@ -26,3 +26,7 @@ export function formatDateFromNanoseconds(timestamp) {
   };
   return new Intl.DateTimeFormat('default', options).format(date);
 }
+
+export function formatTokenName(symbol, name) {
+  return symbol === name ? symbol : `${symbol} (${name})`;
+}
