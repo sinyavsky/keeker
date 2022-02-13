@@ -1,5 +1,6 @@
 import { FILTER_SECTION } from '../utils/constants.js';
 import { formatNearAmount } from '../utils/format.js';
+import { getParasNftUrl } from '../utils/utils.js';
 import iconNear from '../../images/near.svg';
 
 export default function nonFungibleToken(parser, metadata) {
@@ -25,5 +26,14 @@ export default function nonFungibleToken(parser, metadata) {
       res.heading = `Mint ${amount} for ${formatNearAmount(mintData.deposit)} NEAR from contract ${tokenName}`;
     }
   }
+  else if(parser.getFunctionCallReceiver() === 'x.paras.near') { // paras NFT contract
+    const args = parser.getArgsJson();
+    if(parser.getFunctionCallMethod() === "nft_transfer") {
+      const token = args.token_id.indexOf(':') === -1  ? args.token_id : args.token_id.split(':')[0];
+      const receiver = args.receiver_id;
+      res.heading = `Transfer Paras NFT <a href="${getParasNftUrl(token)}" target="_blank">${args.token_id}</a> to ${receiver}`;
+    }
+  }
+  
   return res;
 }
