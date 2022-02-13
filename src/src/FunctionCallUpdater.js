@@ -6,6 +6,7 @@ import parseContractInterface from './parser/parseContractInterface.js';
 import transferToAurora from './recognizer/transferToAurora.js';
 import validatorNode from './recognizer/validatorNode.js';
 import accountNear from './recognizer/accountNear.js';
+import dexRefFinance from './recognizer/dexRefFinance.js';
 import launchpadBocaChica from './recognizer/launchpadBocaChica.js';
 import accountWrap from './recognizer/accountWrap.js';
 import fungibleToken from './recognizer/fungibleToken.js';
@@ -77,6 +78,10 @@ export default class FunctionCallUpdater {
     }
 
     if(this._recognize(accountNear(this._trxParser))) {
+      return;
+    }
+
+    if(this._recognize(dexRefFinance(this._trxParser))) { // todo: will not assign FT section to filter, solution needed
       return;
     }
 
