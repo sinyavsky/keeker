@@ -58,7 +58,7 @@ export default class FunctionCallUpdater {
       this._iconSrc = data.iconSrc;
     }
     
-    if(!this._iconSrc) {
+    if(!this._iconAlt) {
       this._iconAlt = data.iconAlt;
     }   
 
