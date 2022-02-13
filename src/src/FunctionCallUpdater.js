@@ -127,6 +127,6 @@ export default class FunctionCallUpdater {
     
     this._trxElement.setAttribute('data-filter', this._filterData.join(' '));
     this._headingElement.innerHTML = this._heading;
-    this._iconElement.innerHTML = `<img src="${this._iconSrc}" alt="${this.__iconAlt}" class="transaction__icon-picture">`;
+    this._iconElement.innerHTML = `<img src="${this._iconSrc}" alt="${this._iconAlt}" class="transaction__icon-picture">`;
   }
 }
