@@ -34,8 +34,9 @@ Yes, it couldn't "humanize" each function call, but it still better than nothing
 - Interactions with NFT contracts
 
 ### Some method calls of another familiar contracts:
+- Ref.finance
 - BocaChica launchpad
-- Npunks (NEAR Punks) contract
+- Npunks (NEAR Punks)
 
 ### And off course it can handle other [action types](https://nomicon.io/RuntimeSpec/Actions) that are not related to function calls:
 
