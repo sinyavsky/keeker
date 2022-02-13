@@ -5,7 +5,7 @@ import iconNear from '../../images/near.svg';
 export default function validatorNode(parser, validatorsList, currentAccount) {
   const account = parser.getFunctionCallReceiver();
 
-  if(!validatorsList.includes(account)) {
+  if(!validatorsList.includes(account) && account !== 'aurora.poolv1.near') { // not a validator anymore afaik
     return false;
   }
 
