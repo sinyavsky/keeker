@@ -1,7 +1,7 @@
 {
-  "name": "webpack-starter",
+  "name": "keeker",
   "version": "1.0.0",
-  "description": "A light foundation for your next frontend project based on webpack.",
+  "description": "View NEAR accounts activity in a human readable format.",
   "scripts": {
     "lint": "npm run lint:styles; npm run lint:scripts",
     "lint:styles": "stylelint src",
@@ -12,21 +12,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/wbkd/webpack-starter.git"
+    "url": "git+https://github.com/sinyavsky/keeker.git"
   },
-  "keywords": [
-    "webpack",
-    "startkit",
-    "frontend",
-    "es6",
-    "javascript",
-    "webdev"
-  ],
-  "author": "webkid.io",
+  "author": "sinyavsky",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/wbkd/webpack-starter/issues"
-  },
   "devDependencies": {
     "@babel/core": "^7.17.0",
     "@babel/plugin-proposal-class-properties": "^7.14.5",
