@@ -1,7 +1,0 @@
-.filter__list {
-  list-style-type: none;
-  padding-left: 0;
-  display: flex;
-  flex-wrap: wrap;
-  margin: 0 -20px;
-}
