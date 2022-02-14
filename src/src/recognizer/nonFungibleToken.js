@@ -34,7 +34,7 @@ export default async function nonFungibleToken(parser) {
     if(parser.getFunctionCallMethod() === "nft_transfer") {
       const token = args.token_id.indexOf(':') === -1  ? args.token_id : args.token_id.split(':')[0];
       const receiver = args.receiver_id;
-      res.heading = `Transfer Paras NFT <a href="${getParasNftUrl(token)}" target="_blank">${args.token_id}</a> to ${receiver}`;
+      res.heading = `Transfer Paras NFT <a href="${getParasNftUrl(token)}" target="_blank" class="link">${args.token_id}</a> to ${receiver}`;
     }
   }
   
