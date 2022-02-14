@@ -14,6 +14,7 @@
 @import url("../blocks/loader/_size/loader_size_small.css");
 @import url("../blocks/button/button.css");
 @import url("../blocks/button/_theme/button_theme_light.css");
+@import url("../blocks/link/link.css");
 
 @import url("../blocks/entrance/entrance.css");
 @import url("../blocks/entrance/__heading/entrance__heading.css");
