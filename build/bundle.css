@@ -525,6 +525,14 @@ a.json-link:active  { color: slategray; }
   background-color: #f2f2f2;
   transform: translate(0,-2px);
 }
+.link {
+  color: #536dfe;
+  transition: opacity ease .5s;
+}
+
+.link:hover {
+  opacity: .8;
+}
 .entrance {
   padding-bottom: 20px;
 }
@@ -704,13 +712,7 @@ a.json-link:active  { color: slategray; }
   line-height: 1.2;
 }
 .transaction__hashlink {
-  color: #536dfe;
-  transition: opacity ease .5s;
   word-break: break-all;
-}
-
-.transaction__hashlink:hover {
-  opacity: .8;
 }
 .transaction__time {
   margin: 0;
