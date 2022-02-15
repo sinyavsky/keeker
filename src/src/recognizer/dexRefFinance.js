@@ -3,6 +3,7 @@ import iconRefFinance from '../../images/ref-finance.png';
 import contractApi from '../api/contractApi.js';
 import { formatNearAmount, formatTokenAmount, formatTokenName } from '../utils/format.js';
 
+
 export default async function dexRefFinance(parser) {
   const functionCallReceiver = parser.getFunctionCallReceiver();
   if(functionCallReceiver !== 'v2.ref-finance.near') {   
@@ -51,6 +52,23 @@ export default async function dexRefFinance(parser) {
         element: 'Ref.finance',
       },
     ];
+  }
+
+  else if(method === 'remove_liquidity') {
+    const poolData = await contractApi.viewMethod(functionCallReceiver, 'get_pool', {
+      'pool_id': 79
+    });
+    if(poolData === false) {
+      res.heading = `Remove liquidity from the pool at Ref.finance`;
+    }
+    else {
+      const numbers = [];
+      await poolData.token_account_ids.forEach(async (item, key) => {
+        const mtdt = await contractApi.ft_metadata(item);
+        numbers.push(`${formatTokenAmount(argsJson.min_amounts[key], mtdt.decimals)} ${formatTokenName(mtdt.symbol, mtdt.name)}`);
+      });
+      res.heading = `Remove liquidity from the pool: ${numbers.join(' / ')} at Ref.finance`;
+    }
   }
 
   return res;
