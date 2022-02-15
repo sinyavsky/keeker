@@ -56,7 +56,7 @@ export default async function dexRefFinance(parser) {
 
   else if(method === 'remove_liquidity') {
     const poolData = await contractApi.viewMethod(functionCallReceiver, 'get_pool', {
-      'pool_id': 79
+      'pool_id': argsJson.pool_id
     });
     if(poolData === false) {
       res.heading = `Remove liquidity from the pool at Ref.finance`;
