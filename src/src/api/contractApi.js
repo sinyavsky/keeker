@@ -96,6 +96,23 @@ class ContractApi {
       return {};
     }
   }
+
+  async viewMethod(account_id, method_name, methodArgs) { // think of adding cache
+    try {
+      const rawResult = await this._near.connection.provider.query({
+        request_type: 'call_function',
+        account_id,
+        method_name,
+        args_base64: Buffer.from(JSON.stringify(methodArgs)).toString('base64'),
+        finality: 'optimistic',
+      });
+      return JSON.parse(Buffer.from(rawResult.result).toString());
+    }
+
+    catch(error) {
+      return {};
+    }
+  }
 }
 
 const contractApi = new ContractApi(); // should be global because of caching inside
