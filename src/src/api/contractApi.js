@@ -110,7 +110,7 @@ class ContractApi {
     }
 
     catch(error) {
-      return {};
+      return false;
     }
   }
 }
