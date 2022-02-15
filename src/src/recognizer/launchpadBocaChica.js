@@ -18,16 +18,10 @@ export default function launchpadBocaChica(parser) {
 
   const method = parser.getFunctionCallMethod();
   if(method === 'claim_refund') {
-    return {
-      ...res,
-      heading: `Claim refund from Boca Chica launchpad sale #${parser.getBocaChicaSaleId()}`,
-    };
+    res.heading = `Claim refund from Boca Chica launchpad sale #${parser.getBocaChicaSaleId()}`;
   }
   else if(method === 'join') {
-    return {
-      ...res,
-      heading: `Deposit ${formatNearAmount(parser.getBocaChicaJoinDeposit())} NEAR for joining Boca Chica launchpad`,
-    };
+    res.heading = `Deposit ${formatNearAmount(parser.getBocaChicaJoinDeposit())} NEAR for joining Boca Chica launchpad`;
   }
   return res;
 }
