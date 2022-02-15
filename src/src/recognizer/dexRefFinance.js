@@ -1,7 +1,7 @@
-import { FILTER_SECTION } from '../utils/constants.js';
+import { FILTER_SECTION, FILTER_ELEMENT } from '../utils/constants.js';
 import iconRefFinance from '../../images/ref-finance.png';
 import contractApi from '../api/contractApi.js';
-import { formatTokenAmount, formatTokenName } from '../utils/format.js';
+import { formatNearAmount, formatTokenAmount, formatTokenName } from '../utils/format.js';
 
 export default async function dexRefFinance(parser) {
   const functionCallReceiver = parser.getFunctionCallReceiver();
@@ -36,6 +36,21 @@ export default async function dexRefFinance(parser) {
   else if(method === 'withdraw') {
     const metadata = await contractApi.ft_metadata(argsJson.token_id);
     res.heading = `Withdraw ${formatTokenAmount(argsJson.amount, metadata.decimals)} ${formatTokenName(metadata.symbol, metadata.name)} from Ref.finance`;
+  }
+
+  else if(method === 'storage_deposit') {
+    res.heading = `Deposit ${formatNearAmount(parser.getStorageDepositAmount())} NEAR into storage of ${functionCallReceiver}`;
+
+    res.filter = [
+      {
+        section: FILTER_SECTION.NEAR_TRANSFER,
+        element: FILTER_ELEMENT.NEAR_TRANSFER_STORAGE,
+      },
+      {
+        section: FILTER_SECTION.OTHER,
+        element: 'Ref.finance',
+      },
+    ];
   }
 
   return res;
