@@ -71,5 +71,22 @@ export default async function dexRefFinance(parser) {
     }
   }
 
+  else if(method === 'add_liquidity') {
+    const poolData = await contractApi.viewMethod(functionCallReceiver, 'get_pool', {
+      'pool_id': argsJson.pool_id
+    });
+    if(poolData === false) {
+      res.heading = `Add liquidity to the pool at Ref.finance`;
+    }
+    else {
+      const numbers = [];
+      await poolData.token_account_ids.forEach(async (item, key) => {
+        const mtdt = await contractApi.ft_metadata(item);
+        numbers.push(`${formatTokenAmount(argsJson.amounts[key], mtdt.decimals)} ${formatTokenName(mtdt.symbol, mtdt.name)}`);
+      });
+      res.heading = `Add liquidity to the pool: ${numbers.join(' / ')} at Ref.finance`;
+    }
+  }
+
   return res;
 }
