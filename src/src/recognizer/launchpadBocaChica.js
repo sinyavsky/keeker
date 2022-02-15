@@ -16,12 +16,15 @@ export default function launchpadBocaChica(parser) {
     },
   };
 
+  const args = parser.getArgs();
+  const argsJson = parser.getArgsJson();
+
   const method = parser.getFunctionCallMethod();
   if(method === 'claim_refund') {
-    res.heading = `Claim refund from Boca Chica launchpad sale #${parser.getBocaChicaSaleId()}`;
+    res.heading = `Claim refund from Boca Chica launchpad sale #${argsJson.sale_id}`;
   }
   else if(method === 'join') {
-    res.heading = `Deposit ${formatNearAmount(parser.getBocaChicaJoinDeposit())} NEAR for joining Boca Chica launchpad`;
+    res.heading = `Deposit ${formatNearAmount(args.deposit)} NEAR for joining Boca Chica launchpad`;
   }
   return res;
 }

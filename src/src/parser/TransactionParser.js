@@ -89,14 +89,6 @@ export default class TransactionParser {
     return this._trx.args.deposit;
   }
 
-  getBocaChicaSaleId() {
-    return this._trx.args.args_json.sale_id;
-  }
-
-  getBocaChicaJoinDeposit() {
-    return this._trx.args.deposit;
-  }
-
   getNearPunksMasterMint() {
     return {
       deposit: this._trx.args.deposit,
@@ -129,6 +121,10 @@ export default class TransactionParser {
 
   getStakeUpdatedValue() { 
     return this._trx.args.stake;
+  }
+
+  getArgs() {
+    return this._trx.args;
   }
 
   getArgsJson() {
