@@ -26,5 +26,8 @@ export default function launchpadBocaChica(parser) {
   else if(method === 'join') {
     res.heading = `Deposit ${formatNearAmount(args.deposit)} NEAR for joining Boca Chica launchpad`;
   }
+  else if(method === 'deposit_near') {
+    res.heading = `Deposit ${formatNearAmount(args.deposit)} NEAR to Boca Chica launchpad sale  #${argsJson.sale_deposit.sale_id}`;
+  }
   return res;
 }
