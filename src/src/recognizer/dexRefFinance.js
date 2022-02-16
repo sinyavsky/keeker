@@ -63,10 +63,10 @@ export default async function dexRefFinance(parser) {
     }
     else {
       const numbers = [];
-      await poolData.token_account_ids.forEach(async (item, key) => {
+      await Promise.all(poolData.token_account_ids.map(async (item, key) => {
         const mtdt = await contractApi.ft_metadata(item);
         numbers.push(`${formatTokenAmount(argsJson.min_amounts[key], mtdt.decimals)} ${formatTokenName(mtdt.symbol, mtdt.name)}`);
-      });
+      }));
       res.heading = `Remove liquidity from the pool: ${numbers.join(' / ')} at Ref.finance`;
     }
   }
@@ -80,10 +80,10 @@ export default async function dexRefFinance(parser) {
     }
     else {
       const numbers = [];
-      await poolData.token_account_ids.forEach(async (item, key) => {
+      await Promise.all(poolData.token_account_ids.map(async (item, key) => {
         const mtdt = await contractApi.ft_metadata(item);
         numbers.push(`${formatTokenAmount(argsJson.amounts[key], mtdt.decimals)} ${formatTokenName(mtdt.symbol, mtdt.name)}`);
-      });
+      }));
       res.heading = `Add liquidity to the pool: ${numbers.join(' / ')} at Ref.finance`;
     }
   }
@@ -97,10 +97,10 @@ export default async function dexRefFinance(parser) {
         const decimals = poolData.pool_kind === 'SIMPLE_POOL' ? 24 : 18; // todo: get rid of hard coding, https://github.com/ref-finance/ref-contracts/blob/a621eda2e0e170cdf2a9644543064057020781f4/ref-exchange/src/pool.rs
 
         const names = [];
-        await poolData.token_account_ids.forEach(async (item) => {
+        await Promise.all(poolData.token_account_ids.map(async (item) => {
           const mtdt = await contractApi.ft_metadata(item);
           names.push(formatTokenName(mtdt.symbol, mtdt.name));
-        });
+        }));
         res.heading = `Transfer ${formatTokenAmount(argsJson.amount, decimals)} ${names.join(' / ')} LP tokens to v2.ref-farming.near`;
         
       }
