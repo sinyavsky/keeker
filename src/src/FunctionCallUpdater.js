@@ -8,6 +8,7 @@ import transferToAurora from './recognizer/transferToAurora.js';
 import validatorNode from './recognizer/validatorNode.js';
 import accountNear from './recognizer/accountNear.js';
 import dexRefFinance from './recognizer/dexRefFinance.js';
+import dexRefFinanceFarming from './recognizer/dexRefFinanceFarming.js';
 import launchpadBocaChica from './recognizer/launchpadBocaChica.js';
 import accountWrap from './recognizer/accountWrap.js';
 import fungibleToken from './recognizer/fungibleToken.js';
@@ -82,6 +83,10 @@ export default class FunctionCallUpdater {
     }
 
     if(this._recognize(await dexRefFinance(this._trxParser))) { // todo: will not assign FT section to filter, solution needed
+      return;
+    }
+
+    if(this._recognize(await dexRefFinanceFarming(this._trxParser))) { // todo: will not assign FT section to filter, solution needed
       return;
     }
 
