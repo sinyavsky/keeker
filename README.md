@@ -32,11 +32,7 @@ Yes, it couldn't "humanize" each function call, but it still better than nothing
 - NEAR wrap / unwrap actions
 - Fungible tokens transfers / storage deposit
 - Interactions with NFT contracts
-
-### Some method calls of another familiar contracts:
-- Ref.finance
-- BocaChica launchpad
-- Npunks (NEAR Punks)
+- Some method calls of another familiar contracts (such as Ref.finance)
 
 ### And off course it can handle other [action types](https://nomicon.io/RuntimeSpec/Actions) that are not related to function calls:
 
@@ -55,10 +51,15 @@ Another fancy thing: Keekr allows you to filter transaction list. I.e. you can b
 ## Known issues
 
 - Keekr uses super cool [near-contract-parser](https://github.com/encody/near-contract-parser) to recognize possible interface of the contract. This procedure takes few seconds and may freeze browser's tab. Obvious solution is to move this execution on the server side and cache it.
+- Batched transaction displays as separated transactions
 
 ## Future plans
 
-If this modest app will be useful for the community and NEAR team in the NEARest future will not release an update for the explorer with similiar features (I know they are improving explorer right now, but I don't know what exacly to expect), then I will continue to maintain this project and add new functionality.
+- Huge code refactoring (probably will use React)
+- Deeper function call recognition for NFT contracts
+- Support of the function call recognition for more popular contracts
+- Server-side caching
+- UI/UX improvements
 
 ## Disclaimer
 
