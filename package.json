@@ -53,6 +53,6 @@
     "d3": "^7.0.0",
     "near-api-js": "^0.44.2",
     "near-contract-parser": "^0.1.4",
-    "pretty-print-json": "^1.2.2"
+    "pretty-print-json": "^1.2.3"
   }
 }
